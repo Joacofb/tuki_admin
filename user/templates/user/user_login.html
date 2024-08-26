@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="container my-5">
+        <label for="login_form" class="form-label fw-bold fs-1">Iniciar Sesion</label>
+        <hr class="border border-dark">
+        <form id="login_form" action="." method="post" class="row gap-3">
+            {% csrf_token %}
+            <div>
+                <label for="user_name" class="form-label">Nombre de Usuario</label>
+                <input type="text" name="user_name" id="user_name" class="form-control">
+            </div>
+            <div>
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" name="password" id="password" class="form-control">
+            </div>
+            <p>
+                No estas registrado? <a href="{% url 'user:signup' %}" class="text-primary">Registrate</a>
+            </p>
+            <div class="text-center">
+                <button type="submit" class="btn btn-dark mb-3">Iniciar Sesion</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

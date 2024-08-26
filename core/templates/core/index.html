@@ -2,13 +2,20 @@
 
 {% block content %}
 
-<header class="my-5 text-center">
+<header class="mt-4 text-center">
     <h1>Bienvenido a</h1>
     <h1 class="fw-bold text-primary">ESCAPES DON VICENTE</h1>
 </header>
+<hr class="border border-dark">
+{% if not request.user.is_authenticated %}
 <div class="text-center">
-    <a href="" role="button" class="btn btn-outline-primary">INICIAR SESION</a>
-    <a href="" role="button" class="btn btn-outline-success">REGISTRARSE</a>
+    <a href="{% url 'user:login' %}" role="button" class="btn btn-dark">INICIAR SESION</a>
+    <a href="" role="button" class="btn btn-primary">REGISTRARSE</a>
 </div>
-
+{% else %}
+<div class="text-center">
+    <p class="fs-4">Hola, <span class="fw-bold text-primary">BIENVENIDO</span></p>
+    <a href="{% url 'user:logout' %}" class="btn btn-danger">CERRAR SESION</a>
+</div>
+{% endif %}
 {% endblock %}
