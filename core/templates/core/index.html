@@ -14,7 +14,7 @@
 </div>
 {% else %}
 <div class="text-center">
-    <p class="fs-4">Hola, <span class="fw-bold text-primary">BIENVENIDO</span></p>
+    <p class="fs-4">Hola <span class="fw-bold text-primary">{{ request.user }}</span>, BIENVENIDO</p>
     <a href="{% url 'user:logout' %}" class="btn btn-danger">CERRAR SESION</a>
 </div>
 {% endif %}
