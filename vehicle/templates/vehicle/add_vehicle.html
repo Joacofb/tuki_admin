@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="my-5 container">
+        <p class="fw-bold text-dark fs-2">Agregar Vehiculo</p>
+        <hr class="border border-dark">
+        <form id="add_vehicle" name="add_vehicle" class="row g-3" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="vehicle_brand" class="form-label">Marca</label>
+                <select name="vehicle_brand" id="vehicle_brand" class="form-select">
+                    <option value="" selected>Elegir Marca...</option>
+                    {% for brand in brands %}
+                        <option value="{{ brand.0 }}">{{ brand.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="vehicle_model" class="form-label">Modelo</label>
+                <input type="text" class="form-control" id="vehicle_model" name="vehicle_model" placeholder="Corsa II">
+            </div>
+            <div class="col-6">
+                <label for="vehicle_version" class="form-label">Version</label>
+                <input type="text" class="form-control" id="vehicle_version" name="vehicle_version" placeholder="1.4">
+            </div>
+            <div class="col-6">
+                <label for="vehicle_production" class="form-label">Fabricado</label>
+                <input type="text" class="form-control" id="vehicle_production" name="vehicle_production" placeholder="2009-2018">
+            </div>
+            <div class="col-12">
+                <label for="vehicle_details" class="form-label">Detalles</label>
+                <input type="text" class="form-control" id="vehicle_details" name="vehicle_details" placeholder="Detalles Adicionales">
+            </div>
+            <div>
+                <a href="{% url 'core:index' %}" class="btn btn-dark" title="Volver"><-</a>
+                <button type="submit" class="btn btn-dark">Guardar</button>
+                <button type="reset" class="btn btn-success">Reset</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
