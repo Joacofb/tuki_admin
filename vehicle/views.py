@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
 from .models import BRAND_CHOICES, Vehicle
@@ -31,11 +32,28 @@ def edit_vehicle(request):
 
 
 def delete_vehicle(request, vehicle_id):
-    pass
+    get_vehicle = Vehicle.objects.get(pk=vehicle_id)
+    get_vehicle.delete()
+    return redirect('/vehicles/all')
 
 
 def all_vehicles(request):
-    context = {'vehicles': Vehicle.objects.all()}
+
+    search_data = request.GET.get('search_vehicle', '')
+
+    if search_data:
+        vehicles = Vehicle.objects.filter(vehicle_model__icontains=search_data).order_by('vehicle_brand')
+    else:
+        vehicles = Vehicle.objects.all().order_by('vehicle_brand')
+
+    paginator = Paginator(vehicles, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'search_data': search_data,
+    }
 
     return render(request, 'vehicle/all_vehicles.html', context)
 
