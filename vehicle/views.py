@@ -59,4 +59,9 @@ def all_vehicles(request):
 
 
 def vehicle(request, vehicle_id):
-    pass
+    get_vehicle = Vehicle.objects.get(pk=vehicle_id)
+    context = {
+        'vehicle': get_vehicle,
+    }
+
+    return render(request, 'vehicle/vehicle.html', context)
