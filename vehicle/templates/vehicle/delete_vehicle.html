@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <div class="card my-5">
+    <div class="card-body p-5 text-center">
+      <h5 class="card-text text-danger fw-bold">ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?</h5>
+      <hr />
+      <p class="card-text">Marca: {{ vehicle.vehicle_brand }} - Modelo: {{ vehicle.vehicle_model }}, {{ vehicle.vehicle_version }}. {{ vehicle.vehicle_production }}</p>
+      <p class="card-text fw-bold">NO PODRAS DESHACER ESTA ACCION</p>
+      <form method="POST" class="d-flex justify-content-around">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">Si, eliminar</button>
+        <a href="{% url 'vehicle:all' %}" class="btn btn-outline-dark">Cancelar</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

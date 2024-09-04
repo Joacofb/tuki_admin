@@ -1,6 +1,5 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import BRAND_CHOICES, Vehicle
 
 
@@ -32,9 +31,19 @@ def edit_vehicle(request):
 
 
 def delete_vehicle(request, vehicle_id):
-    get_vehicle = Vehicle.objects.get(pk=vehicle_id)
-    get_vehicle.delete()
-    return redirect('/vehicles/all')
+    get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+    context = {
+        'vehicle': get_vehicle
+    }
+
+    if request.method == 'POST':
+        get_vehicle.delete()
+        return redirect('/vehicles/all')
+
+    # get_vehicle = Vehicle.objects.get(pk=vehicle_id)
+    # get_vehicle.delete()
+
+    return render(request, 'vehicle/delete_vehicle.html', context)
 
 
 def all_vehicles(request):
