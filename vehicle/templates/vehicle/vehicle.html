@@ -9,7 +9,7 @@
       <p class="card-text">{{ vehicle.vehicle_details }}</p>
       <div class="d-flex justify-content-between">
         <a class="btn btn-outline-dark">Agregar Producto Asociado</a>
-        <a class="btn btn-outline-dark">Editar Vehiculo</a>
+        <a href="{% url 'vehicle:edit' vehicle.vehicle_id %}" class="btn btn-outline-dark">Editar Vehiculo</a>
       </div>
       <div>
         <hr />

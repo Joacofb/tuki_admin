@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<!--<h1>Agregar Nuevo Vehículo</h1>-->
+<!--<form method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form.as_p }}-->
+<!--    <button type="submit">Agregar Vehículo</button>-->
+<!--</form>-->
+
+    <div class="my-5 container">
+        <p class="fw-bold text-dark fs-2">Agregar Vehiculo</p>
+        <hr class="border border-dark">
+        <form id="edit_vehicle" name="edit_vehicle" class="row g-3" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="vehicle_brand" class="form-label">Marca</label>
+                <select name="vehicle_brand" id="vehicle_brand" class="form-select">
+                    <option value="{{ vehicle.vehicle_brand }}" selected>{{ vehicle.vehicle_brand }}</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="vehicle_model" class="form-label">Modelo</label>
+                <input type="text" class="form-control" id="vehicle_model" name="vehicle_model" value="{{ vehicle.vehicle_model }}">
+            </div>
+            <div class="col-6">
+                <label for="vehicle_version" class="form-label">Version</label>
+                <input type="text" class="form-control" id="vehicle_version" name="vehicle_version" value="{{ vehicle.vehicle_version }}">
+            </div>
+            <div class="col-6">
+                <label for="vehicle_production" class="form-label">Fabricado</label>
+                <input type="text" class="form-control" id="vehicle_production" name="vehicle_production" value="{{ vehicle.vehicle_production }}">
+            </div>
+            <div class="col-12">
+                <label for="vehicle_details" class="form-label">Detalles</label>
+                <input type="text" class="form-control" id="vehicle_details" name="vehicle_details" value="{{ vehicle.vehicle_details }}">
+            </div>
+            <div>
+                <a href="{% url 'core:index' %}" class="btn btn-dark" title="Volver"><-</a>
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="reset" class="btn btn-dark">Reset</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
