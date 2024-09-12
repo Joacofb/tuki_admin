@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-3 border rounded bg-light">
+    <p class="fw-bold text-dark fs-2 text-center my-2">Agregar Producto</p>
+    <hr class="border border-dark">
+
+    <form method="POST" class="row g-3">
+        {% csrf_token %}
+
+        <!-- Nombre del Producto -->
+        <div class="col-sm-12">
+            {{ form.product_name.label_tag }}
+            {{ form.product_name }}
+        </div>
+
+        <!-- Tipo del Producto -->
+        <div class="col-sm-12">
+            {{ form.product_type.label_tag }}
+            {{ form.product_type }}
+        </div>
+
+        <!-- Descripción del Producto -->
+        <div class="col-sm-12">
+            {{ form.product_description.label_tag }}
+            {{ form.product_description }}
+        </div>
+
+        <!-- Proveedor del Producto -->
+        <div class="col-sm-12">
+            {{ form.product_supplier.label_tag }}
+            {{ form.product_supplier }}
+        </div>
+
+        <!-- SKU del Producto -->
+        <div class="col-sm-12">
+            {{ form.product_sku.label_tag }}
+            {{ form.product_sku }}
+        </div>
+
+        <!-- Grupo de Moneda y Precio en una misma fila -->
+        <div class="col-sm-12">
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    {{ form.product_currency.label_tag }}
+                    {{ form.product_currency }}
+                </div>
+                <div class="col-sm-8">
+                    {{ form.product_price.label_tag }}
+                    {{ form.product_price }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="my-4 d-flex justify-content-start">
+            <a href="{% url 'product:all' %}" class="btn btn-outline-dark me-2">
+                <i class="bi-arrow-left-circle"></i> Volver
+            </a>
+            <button type="submit" class="btn btn-dark me-2">Guardar</button>
+            <button type="reset" class="btn btn-success">Reset</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

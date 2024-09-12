@@ -31,9 +31,13 @@
                 <label for="vehicle_details" class="form-label">Detalles</label>
                 <input type="text" class="form-control" id="vehicle_details" name="vehicle_details" placeholder="Detalles Adicionales">
             </div>
-            <div>
-                <a href="{% url 'core:index' %}" class="btn btn-dark" title="Volver"><-</a>
-                <button type="submit" class="btn btn-dark">Guardar</button>
+
+            <!-- Botones de Acción -->
+            <div class="my-4 d-flex justify-content-start">
+                <a href="{% url 'vehicle:all' %}" class="btn btn-outline-dark me-2">
+                    <i class="bi-arrow-left-circle"></i> Volver
+                </a>
+                <button type="submit" class="btn btn-dark me-2">Guardar</button>
                 <button type="reset" class="btn btn-success">Reset</button>
             </div>
         </form>
