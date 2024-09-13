@@ -1,0 +1,84 @@
+{% extends 'core/base.html' %}
+
+<!--{% load static %}-->
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'customer/css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="my-5 p-3 border rounded bg-first">
+        <div class="d-flex justify-content-center align-items-center">
+            <p class="fw-bold text-dark fs-1 mt-3">CLIENTES</p>
+            <a href="{% url 'product:add' %}" class="ms-3 fs-3 text-dark">
+                <i class="bi bi-plus-circle-fill"></i>
+            </a>
+        </div>
+        <form action="." method="GET" class="mb-3 input-group">
+            <span class="input-group-text" id="basic-addon1">
+                <i class="bi-search"></i>
+            </span>
+            <input type="text" id="search_customer" name="search_customer" placeholder="Buscar Patente -- ej: ASD322 o AS546FR --" class="form-control" value="{{ search_data }}">
+            <button type="submit" class="btn btn-outline-dark">Buscar</button>
+        </form>
+        <table class="table align-middle table-sm">
+            <thead>
+                <tr>
+                    <th>PATENTE</th>
+                    <th>NOMBRE</th>
+                    <th>TELEFONO</th>
+                    <th class="text-center">ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for customer in customers %}
+                <tr>
+                    <td class="fw-bold text-first text-important">{{ customer.customer_carid }}</td>
+                    <td>{{ customer.customer_name }}</td>
+                    <td>{{ customer.customer_phone }}</td>
+                    <td class="text-center">
+                        <a href="" class="d-inline text-decoration-none text-dark">
+                            <i class="bi bi-car-front-fill"></i>
+                        </a>
+                        <a href="" class="d-inline text-decoration-none">
+                            <i class="bi-info-square"></i>
+                        </a>
+                        <a href="" class="d-inline text-decoration-none text-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Controles de paginación -->
+<!--        <nav aria-label="Page navigation">-->
+<!--            <ul class="pagination justify-content-center gap-1">-->
+<!--                {% if page_obj.has_previous %}-->
+<!--                    <li>-->
+<!--                        <a class="btn btn-outline-dark" href="?page=1" aria-label="Previous">-->
+<!--                            <span aria-hidden="true">&laquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                {% endif %}-->
+<!--                {% for num in page_obj.paginator.page_range %}-->
+<!--                    <li>-->
+<!--                        <a class="btn btn-outline-dark {% if num == page_obj.number %}active{% endif %}" href="?page={{ num }}">{{ num }}</a>-->
+<!--                    </li>-->
+<!--                {% endfor %}-->
+<!--                {% if page_obj.has_next %}-->
+<!--                    <li>-->
+<!--                        <a class="btn btn-outline-dark" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">-->
+<!--                            <span aria-hidden="true">&raquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                {% endif %}-->
+<!--            </ul>-->
+<!--        </nav>-->
+        <div>
+            <a href="{% url 'product:all' %}" class="btn btn-outline-dark">
+                <i class="bi-arrow-left-circle"></i> Volver
+            </a>
+        </div>
+    </div>
+{% endblock %}

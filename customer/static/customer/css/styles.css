@@ -1,0 +1,19 @@
+.text-first {
+    color: rgb(35, 61, 77);
+}
+
+.text-second {
+    color: #FCCA46;
+}
+
+.bg-first {
+    background-color: rgba(110, 152, 135, .1);
+}
+
+.bg-second {
+    background-color: #E8EBF7;
+}
+
+.text-important {
+    font-size: 1.2rem;
+}
