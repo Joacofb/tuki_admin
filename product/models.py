@@ -1,25 +1,26 @@
 from django.db import models
+# from django.core.validators import RegexValidator
 import uuid
 
 TYPE_CHOICES = {
-    'SALIDAS': 'SALIDAS',
-    'DELANTEROS': 'DELANTEROS',
-    'INTERMEDIOS': 'INTERMEDIOS',
-    'TRASEROS': 'TRASEROS',
-    'COLAS': 'COLAS',
-    'ACCESORIOS': 'ACCESORIOS',
-    'DEPORTIVOS': 'DEPORTIVOS',
-    'MATERIALES': 'MATERIALES',
-    'INSUMOS': 'INSUMOS',
+    'SALIDAS': 'SM',
+    'DELANTEROS': 'SD',
+    'INTERMEDIOS': 'SI',
+    'TRASEROS': 'ST',
+    'COLAS': 'CL',
+    'ACCESORIOS': 'AC',
+    'DEPORTIVOS': 'DE',
+    'MATERIALES': 'MA',
+    'INSUMOS': 'IN',
 }
 
 TYPE_SUPPLIERS = {
-    'GIACCONE': 'GIACCONE',
-    'PERTOVT': 'PERTOVT',
-    'TUBOSIL': 'TUBOSIL',
-    'LATINA': 'LATINA',
-    'SILENPRO': 'SILENPRO',
-    'OTROS': 'OTROS',
+    'GIACCONE': 'GC',
+    'PERTOVT': 'PT',
+    'TUBOSIL': 'TS',
+    'LATINA': 'LT',
+    'SILENPRO': 'SP',
+    'OTROS': 'OT',
 }
 
 
@@ -33,7 +34,11 @@ class Product(models.Model):
     product_currency = models.CharField(max_length=3, default='ARS')
     product_discount = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     product_stock = models.IntegerField(default=0)
-    product_sku = models.CharField(max_length=100, unique=True)
+    product_sku = models.CharField(
+        max_length=10, 
+        null=True,
+        blank=True,
+        )
     product_is_active = models.BooleanField(default=True)
     product_related_products = models.ManyToManyField('self', blank=True)
 

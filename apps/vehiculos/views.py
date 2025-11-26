@@ -23,7 +23,7 @@ def add_vehicle(request):
                 vehicle_production=vehicle_production,
                 vehicle_details=vehicle_details,
             )
-            return redirect('/vehicles/all')
+            return redirect('/vehiculos/all')
 
     return render(request, 'vehicle/add_vehicle.html', context)
 

@@ -1,7 +1,7 @@
 import uuid
 
 from django.db import models
-from vehicle.models import Vehicle
+from apps.vehiculos.models import Vehicle
 from django.core.exceptions import ValidationError
 
 
