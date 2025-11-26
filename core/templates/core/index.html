@@ -2,6 +2,20 @@
 
 {% block content %}
 
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert 
+            {% if message.tags == 'success' %}alert-success
+            {% elif message.tags == 'error' %}alert-danger
+            {% elif message.tags == 'warning' %}alert-warning
+            {% elif message.tags == 'info' %}alert-info
+            {% else %}alert-secondary{% endif %} 
+            alert-dismissible fade show" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
 <header class="mt-4 text-center">
     <h1>Bienvenido a</h1>
     <h1 class="fw-bold text-primary">ESCAPES DON VICENTE</h1>
@@ -10,7 +24,7 @@
 {% if not request.user.is_authenticated %}
 <div class="text-center">
     <a href="{% url 'user:login' %}" role="button" class="btn btn-dark">INICIAR SESION</a>
-    <a href="" role="button" class="btn btn-primary">REGISTRARSE</a>
+    <a href="{% url 'user:signup' %}" role="button" class="btn btn-primary">REGISTRARSE</a>
 </div>
 {% else %}
 <div class="text-center">

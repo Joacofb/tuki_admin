@@ -26,14 +26,14 @@ TYPE_SUPPLIERS = {
 class Product(models.Model):
     product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     product_name = models.CharField(max_length=100)
-    product_description = models.TextField()
+    product_description = models.TextField(blank=True)
     product_type = models.CharField(max_length=100, choices=TYPE_CHOICES)
     product_supplier = models.CharField(max_length=100, choices=TYPE_SUPPLIERS)
-    product_price = models.DecimalField(max_digits=10, decimal_places=2)
+    product_price = models.DecimalField(max_digits=10, decimal_places=0)
     product_currency = models.CharField(max_length=3, default='ARS')
     product_discount = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     product_stock = models.IntegerField(default=0)
-    product_sku = models.CharField(max_length=100, unique=True, blank=True, null=True)
+    product_sku = models.CharField(max_length=100, unique=True)
     product_is_active = models.BooleanField(default=True)
     product_related_products = models.ManyToManyField('self', blank=True)
 

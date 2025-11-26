@@ -1,6 +1,21 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert 
+            {% if message.tags == 'success' %}alert-success
+            {% elif message.tags == 'error' %}alert-danger
+            {% elif message.tags == 'warning' %}alert-warning
+            {% elif message.tags == 'info' %}alert-info
+            {% else %}alert-secondary{% endif %} 
+            alert-dismissible fade show" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
     <div class="container my-5">
         <label for="login_form" class="form-label fw-bold fs-1">Registrarse</label>
         <hr class="border border-dark">
