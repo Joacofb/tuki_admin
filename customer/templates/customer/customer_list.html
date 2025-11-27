@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="my-5 p-3 border rounded bg-first">
+  <div class="d-flex justify-content-center align-items-center">
+    <p class="fw-bold text-dark fs-1 mt-3">Clientes</p>
+    <a href="#" class="ms-3 fs-3 text-dark">
+        <i class="bi bi-plus-circle-fill"></i>
+    </a>
+  </div>
+  
+  <form action="." method="GET" class="mb-3 input-group">
+      <span class="input-group-text" id="basic-addon1">
+          <i class="bi-search"></i>
+      </span>
+      <input type="text" id="search_customer" name="search_customer" placeholder="Buscar Patente -- ej: ASD322 o AS546FR --" class="form-control" value="{{ search_data }}">
+      <button type="submit" class="btn btn-outline-dark">Buscar</button>
+  </form>
+  <table class="table align-middle table-sm">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      {% for c in customers %}
+        <tr>
+          <td>{{ c.customer_name }}</td>
+          <td>{{ c.customer_phone }}</td>
+          <td>{{ c.customer_email }}</td>
+          <td class="text-center">
+            <a href="{% url 'customer:detail' c.customer_id %}" class="d-inline text-decoration-none">
+                <i class="bi-info-square"></i>
+            </a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4">No hay clientes aún.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div>
+      <a href="{% url 'core:index' %}" class="btn btn-outline-dark">
+          <i class="bi-arrow-left-circle"></i> Volver
+      </a>
+  </div>
+</div>
+{% endblock %}

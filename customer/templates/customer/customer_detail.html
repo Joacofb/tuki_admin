@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="card my-2">
+  <div class="card-body">
+    <h1 class="card-title fw-bold">{{ customer.customer_name }}</h1>
+    
+    <p class="fw-bold">Teléfono: {{ customer.customer_phone }}</p>
+    <p>Email: {{ customer.customer_email }}</p>
+    <p>Dirección: {{ customer.customer_address }}</p>
+  </div>
+</div>
+<hr/>
+<h2 class="card-header fw-bold">Vehículos</h2>
+<div class="card my-2">
+  <div class="card-body">
+    {% if vehicle_workorders %}
+      {% for vehicle, workorders in vehicle_workorders %}
+        <h2 class="card-title fw-bold">{{ vehicle.vehicle_plate }}</h2>
+        <h3>{{ vehicle.vehicle_model }}</h3>
+        <p>Color: {{ vehicle.vehicle_color }}</p>
+        <p>Detalles: {{ vehicle.vehicle_details }}</p>
+    
+        <h4>Últimos trabajos</h4>
+        {% if workorders %}
+          <ul>
+            {% for w in workorders %}
+              <li>
+                {{ w.date }} - {{ w.status }} - {{ w.total_amount }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>Sin trabajos registrados.</p>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <p>Este cliente no tiene vehículos asociados.</p>
+    {% endif %}
+  </div>
+</div>
+
+<div>
+      <a href="{% url 'customer:list' %}" class="btn btn-outline-dark">
+          <i class="bi-arrow-left-circle"></i> Volver
+      </a>
+  </div>
+
+{% endblock %}
