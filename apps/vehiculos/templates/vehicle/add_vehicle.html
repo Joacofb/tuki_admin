@@ -4,33 +4,74 @@
     <div class="my-5 container">
         <p class="fw-bold text-dark fs-2">Agregar Vehiculo</p>
         <hr class="border border-dark">
+        {% if errors %}
+        <ul class="alert alert-danger">
+            {% for e in errors %}
+            <li>{{ e }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <form id="add_vehicle" name="add_vehicle" class="row g-3" method="post">
             {% csrf_token %}
-            <div>
-                <label for="vehicle_brand" class="form-label">Marca</label>
-                <select name="vehicle_brand" id="vehicle_brand" class="form-select">
-                    <option value="" selected>Elegir Marca...</option>
-                    {% for brand in brands %}
-                        <option value="{{ brand.0 }}">{{ brand.1 }}</option>
+            <fieldset>
+                <legend>Seleccionar modelo existente</legend>
+                <select name="vehicle_model_id" class="form-control">
+                    <option value="">-- Ninguno (crear uno nuevo abajo) --</option>
+                    {% for m in vehicle_models %}
+                    <option value="{{ m.vehiclemodel_id }}">
+                        {{ m.vehiclemodel_brand }} {{ m.vehiclemodel_name }} {{ m.vehiclemodel_version }}
+                        ({{ m.vehiclemodel_production }})
+                    </option>
                     {% endfor %}
                 </select>
-            </div>
-            <div class="col-12">
-                <label for="vehicle_model" class="form-label">Modelo</label>
-                <input type="text" class="form-control" id="vehicle_model" name="vehicle_model" placeholder="Corsa II">
-            </div>
-            <div class="col-6">
-                <label for="vehicle_version" class="form-label">Version</label>
-                <input type="text" class="form-control" id="vehicle_version" name="vehicle_version" placeholder="1.4">
-            </div>
-            <div class="col-6">
-                <label for="vehicle_production" class="form-label">Fabricado</label>
-                <input type="text" class="form-control" id="vehicle_production" name="vehicle_production" placeholder="2009-2018">
-            </div>
-            <div class="col-12">
-                <label for="vehicle_details" class="form-label">Detalles</label>
-                <input type="text" class="form-control" id="vehicle_details" name="vehicle_details" placeholder="Detalles Adicionales">
-            </div>
+            </fieldset>
+            <hr>
+            <fieldset>
+                <legend>O cree un modelo nuevo</legend>
+                <div>
+                    <label for="vehiclemodel_brand" class="form-label">Marca</label>
+                    <select name="vehiclemodel_brand" id="vehiclemodel_brand" class="form-select" value="{{ form_data.vehiclemodel_brand|default:'' }}">
+                        <option value="" selected>Elegir Marca...</option>
+                        {% for brand in brands %}
+                            <option value="{{ brand.0 }}">{{ brand.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label for="vehiclemodel_name" class="form-label">Modelo</label>
+                    <input type="text" class="form-control" id="vehiclemodel_name" name="vehiclemodel_name" placeholder="Corsa II" value="{{ form_data.vehiclemodel_name|default:'' }}">
+                </div>
+                <div class="col-6">
+                    <label for="vehiclemodel_version" class="form-label">Version</label>
+                    <input type="text" class="form-control" id="vehiclemodel_version" name="vehiclemodel_version" placeholder="1.4" value="{{ form_data.vehiclemodel_version|default:'' }}">
+                </div>
+                <div class="col-6">
+                    <label for="vehiclemodel_production" class="form-label">Fabricado</label>
+                    <input type="text" class="form-control" id="vehiclemodel_production" name="vehiclemodel_production" placeholder="2009-2018" value="{{ form_data.vehiclemodel_production|default:'' }}">
+                </div>
+                <div class="col-12">
+                    <label for="vehiclemodel_details" class="form-label">Detalles</label>
+                    <input type="text" class="form-control" id="vehiclemodel_details" name="vehiclemodel_details" placeholder="Detalles Adicionales">
+                </div>
+            </fieldset>
+
+            <hr>
+
+            <fieldset>
+                <legend>Datos del vehiculo</legend>
+                <div class="col-12">
+                    <label for="vehicle_plate" class="form-label">Patente</label>
+                    <input type="text" class="form-control" id="vehicle_plate" name="vehicle_plate" placeholder="AAA555 | AA222EE" value="{{ form_data.vehicle_plate|default:'' }}">
+                </div>
+                <div class="col-6">
+                    <label for="vehicle_color" class="form-label">Color</label>
+                    <input type="text" class="form-control" id="vehicle_color" name="vehicle_color" placeholder="Blanco" value="{{ form_data.vehicle_color|default:'' }}">
+                </div>
+                <div class="col-6">
+                    <label for="vehicle_details" class="form-label">Detalles</label>
+                    <input type="text" class="form-control" id="vehicle_details" name="vehicle_details" placeholder="Aleron roto" value="{{ form_data.vehiclemodel_production|default:'' }}">
+                </div>
+            </fieldset>
 
             <!-- Botones de Acción -->
             <div class="my-4 d-flex justify-content-start">
@@ -43,3 +84,6 @@
         </form>
     </div>
 {% endblock %}
+
+
+### ERROR AL ENVIAR FORMULARIO COMPLETANDOLO, DESDE SELECCION DE MODELO FUNCIONA
