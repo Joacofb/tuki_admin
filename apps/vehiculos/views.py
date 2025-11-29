@@ -93,41 +93,112 @@ def add_vehicle(request):
 
     return render(request, "vehicle/add_vehicle.html", context)
 
-def edit_vehicle(request, vehicle_id):
-    # get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
-    #
-    # if request.method == 'POST':
-    #     form = VehicleForm(request.POST, instance=get_vehicle)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('/vehicles/all')  # O redirigir a la página de detalles del vehículo
-    # else:
-    #     form = VehicleForm(instance=get_vehicle)
-    #
-    # return render(request, 'vehicle/edit_vehicle.html', {'form': form, 'vehicle': vehicle})
 
-    get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
-    context = {'vehicle': get_vehicle}
+def edit_vehicle(request, vehicle_id):
+    print("DEBUG edit_vehicle: method =", request.method, "vehicle_id =", vehicle_id)
+    vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+
+    vehicle_models = VehicleModel.objects.all().order_by(
+        "vehiclemodel_brand", "vehiclemodel_name", "vehiclemodel_version"
+    )
+        
+    context = {
+        "brands": BRAND_CHOICES,
+        "vehicle_models": vehicle_models,
+        "vehicle": vehicle,
+        "errors": [],
+    }
 
     if request.method == 'POST':
-        vehicle_brand = request.POST.get('vehicle_brand', '')
-        vehicle_model = request.POST.get('vehicle_model', '')
-        vehicle_version = request.POST.get('vehicle_version', '')
-        vehicle_production = request.POST.get('vehicle_production', '')
-        vehicle_details = request.POST.get('vehicle_details', '')
 
-        if vehicle_brand and vehicle_model and vehicle_version:
-            get_vehicle.vehicle_brand = vehicle_brand
-            get_vehicle.vehicle_model = vehicle_model
-            get_vehicle.vehicle_version = vehicle_version
-            get_vehicle.vehicle_production = vehicle_production
-            get_vehicle.vehicle_details = vehicle_details
+        print("DEBUG POST raw data:", request.POST)
+        print("DEBUG POST as dict:", request.POST.dict())
 
-            get_vehicle.save()
+        existing_model_id = request.POST.get("vehicle_model_id", "").strip()
 
-            return redirect('vehiculos:vehicle', vehicle_id=vehicle_id)
+        # Datos del vehículo concreto
+        vehicle_plate = request.POST.get("vehicle_plate", "").strip()
+        vehicle_color = request.POST.get("vehicle_color", "").strip()
+        vehicle_details = request.POST.get("vehicle_details", "").strip()
 
-    return render(request, 'vehicle/edit_vehicle.html', context)
+        print("DEBUG read from POST:")
+        print("  existing_model_id:", repr(existing_model_id))
+        print("  vehicle_plate:", repr(vehicle_plate))
+        print("  vehicle_color:", repr(vehicle_color))
+        print("  vehicle_details:", repr(vehicle_details))
+
+        errors = []
+        vehicle_model_obj = None
+
+        # Lógica: o seleccionás un modelo existente o definís uno nuevo
+        if existing_model_id:
+            try:
+                vehicle_model_obj = VehicleModel.objects.get(pk=existing_model_id)
+            except VehicleModel.DoesNotExist:
+                errors.append("El modelo de vehículo seleccionado no existe.")
+
+        else:
+            vehicle_model_obj = vehicle.vehicle_model
+        
+        if not errors:
+
+            print("DEBUG before update:", vehicle_id)
+
+            vehicle.vehicle_model = vehicle_model_obj
+            vehicle.vehicle_plate = vehicle_plate or None
+            vehicle.vehicle_color = vehicle_color or None
+            vehicle.vehicle_details = vehicle_details or None
+
+            print("DEBUG to save:", vehicle_id)
+
+            vehicle.save()
+
+            print("DEBUG after save:", Vehicle.objects.get(pk=vehicle.pk).vehicle_details)
+            return redirect("vehiculos:all")
+        
+        # Si hubo errores, los devolvemos al template
+        context["errors"] = errors
+        context["form_data"] = request.POST
+            
+    return render(request, "vehicle/edit_vehicle.html", context)
+
+# def edit_vehicle(request, vehicle_id):
+#     # get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+#     #
+#     # if request.method == 'POST':
+#     #     form = VehicleForm(request.POST, instance=get_vehicle)
+#     #     if form.is_valid():
+#     #         form.save()
+#     #         return redirect('/vehicles/all')  # O redirigir a la página de detalles del vehículo
+#     # else:
+#     #     form = VehicleForm(instance=get_vehicle)
+#     #
+#     # return render(request, 'vehicle/edit_vehicle.html', {'form': form, 'vehicle': vehicle})
+
+#     # get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+#     # context = {'vehicle': get_vehicle}
+
+#     # if request.method == 'POST':
+#     #     vehicle_brand = request.POST.get('vehicle_brand', '')
+#     #     vehicle_model = request.POST.get('vehicle_model', '')
+#     #     vehicle_version = request.POST.get('vehicle_version', '')
+#     #     vehicle_production = request.POST.get('vehicle_production', '')
+#     #     vehicle_details = request.POST.get('vehicle_details', '')
+
+#     #     if vehicle_brand and vehicle_model and vehicle_version:
+#     #         get_vehicle.vehicle_brand = vehicle_brand
+#     #         get_vehicle.vehicle_model = vehicle_model
+#     #         get_vehicle.vehicle_version = vehicle_version
+#     #         get_vehicle.vehicle_production = vehicle_production
+#     #         get_vehicle.vehicle_details = vehicle_details
+
+#     #         get_vehicle.save()
+
+#     #         return redirect('vehiculos:vehicle', vehicle_id=vehicle_id)
+
+#     # return render(request, 'vehicle/edit_vehicle.html', context)
+
+
 
 
 def delete_vehicle(request, vehicle_id):
