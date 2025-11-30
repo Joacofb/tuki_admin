@@ -1,0 +1,33 @@
+{# templates/layouts/page_base.html #}
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="tuki-page">
+  <div class="tuki-page-inner">
+
+    <div class="tuki-page-header">
+      <div>
+        <h1 class="tuki-page-title">
+          {% block page_title %}Sin título{% endblock %}
+        </h1>
+        {% block page_subtitle %}
+        <p class="tuki-page-subtitle"></p>
+        {% endblock %}
+      </div>
+
+      <div class="tuki-page-actions">
+        {% block page_actions %}
+        {# Aquí van botones tipo "Nuevo", "Volver", etc. #}
+        {% endblock %}
+      </div>
+    </div>
+
+    <section class="tuki-page-body">
+      {% block page_body %}
+      {# Aquí va el contenido principal de la página #}
+      {% endblock %}
+    </section>
+
+  </div>
+</div>
+{% endblock %}

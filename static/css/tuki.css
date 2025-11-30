@@ -1,0 +1,228 @@
+:root {
+  /* Colores base */
+  --tuki-color-bg: #0f172a;              /* fondo general (azul oscuro) */
+  --tuki-color-surface: #ffffff;        /* tarjetas / formularios */
+  --tuki-color-surface-muted: #f3f4f6;  /* fondos suaves (headers, filas alternas) */
+  --tuki-color-border-subtle: #e5e7eb;
+
+  /* Colores de marca */
+  --tuki-color-primary: #1d4ed8;        /* azul */
+  --tuki-color-primary-dark: #1e40af;
+  --tuki-color-accent: #b45309;         /* amarillo/ámbar oscuro */
+
+  /* Estados */
+  --tuki-color-success: #15803d;
+  --tuki-color-danger: #b91c1c;
+  --tuki-color-warning: #d97706;
+
+  /* Texto */
+  --tuki-text-main: #111827;            /* casi negro */
+  --tuki-text-muted: #6b7280;           /* gris medio */
+  --tuki-text-on-primary: #f9fafb;      /* texto sobre botones azules */
+
+  /* Tipografía */
+  --tuki-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --tuki-font-size-base: 16px;
+  --tuki-font-size-sm: 0.875rem;
+  --tuki-font-size-lg: 1.125rem;
+  --tuki-font-size-xl: 1.5rem;
+  --tuki-font-size-2xl: 2rem;
+
+  /* Espaciados */
+  --tuki-space-xs: 0.25rem;   /* 4px */
+  --tuki-space-sm: 0.5rem;    /* 8px */
+  --tuki-space-md: 0.75rem;   /* 12px */
+  --tuki-space-lg: 1rem;      /* 16px */
+  --tuki-space-xl: 1.5rem;    /* 24px */
+  --tuki-space-2xl: 2rem;     /* 32px */
+
+  /* Bordes y sombras */
+  --tuki-radius-sm: 0.25rem;
+  --tuki-radius-md: 0.5rem;
+  --tuki-radius-lg: 0.75rem;
+
+  --tuki-shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.25);
+}
+
+
+/* LAYOUT BASE DE LA PAGINA */
+
+body {
+  background-color: var(--tuki-color-bg);
+  color: #e5e7eb;
+  font-family: var(--tuki-font-family);
+  font-size: var(--tuki-font-size-base);
+}
+
+/* Contenedor general de página tuki */
+.tuki-page {
+  min-height: 100vh;
+  padding: var(--tuki-space-xl);
+}
+
+/* Para centrar contenido y que no se haga ancho infinito */
+.tuki-page-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header de cada página (título + acciones) */
+.tuki-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--tuki-space-xl);
+}
+
+.tuki-page-title {
+  font-size: var(--tuki-font-size-2xl);
+  font-weight: 600;
+  color: #f9fafb;
+  margin: 0;
+}
+
+.tuki-page-subtitle {
+  font-size: var(--tuki-font-size-sm);
+  color: var(--tuki-text-muted);
+  margin-top: var(--tuki-space-xs);
+}
+
+/* Contenedor para botones de la cabecera */
+.tuki-page-actions {
+  display: flex;
+  gap: var(--tuki-space-sm);
+}
+
+/* CARDS/PANEL */
+
+.tuki-card {
+  background-color: var(--tuki-color-surface);
+  border-radius: var(--tuki-radius-lg);
+  box-shadow: var(--tuki-shadow-soft);
+  padding: var(--tuki-space-xl);
+  border: 1px solid var(--tuki-color-border-subtle);
+  color: var(--tuki-text-main);
+}
+
+.tuki-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--tuki-space-lg);
+}
+
+.tuki-card-title {
+  font-size: var(--tuki-font-size-xl);
+  font-weight: 600;
+  margin: 0;
+}
+
+.tuki-card-subtitle {
+  font-size: var(--tuki-font-size-sm);
+  color: var(--tuki-text-muted);
+  margin-top: var(--tuki-space-xs);
+}
+
+.tuki-card-section-title {
+  font-size: var(--tuki-font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tuki-text-muted);
+  margin-bottom: var(--tuki-space-sm);
+}
+
+/* BOTONES CONSISTENTES */
+
+/* Botón principal: azul */
+.btn-tuki-primary {
+  background-color: var(--tuki-color-primary);
+  border-color: var(--tuki-color-primary-dark);
+  color: var(--tuki-text-on-primary);
+  font-weight: 500;
+  padding: var(--tuki-space-sm) var(--tuki-space-lg);
+  border-radius: var(--tuki-radius-md);
+}
+
+.btn-tuki-primary:hover,
+.btn-tuki-primary:focus {
+  background-color: var(--tuki-color-primary-dark);
+  border-color: var(--tuki-color-primary-dark);
+  color: var(--tuki-text-on-primary);
+}
+
+/* Botón secundario: borde gris, fondo blanco */
+.btn-tuki-secondary {
+  background-color: #dce0f5;
+  border-color: var(--tuki-color-border-subtle);
+  color: var(--tuki-text-main);
+  font-weight: 500;
+  padding: var(--tuki-space-sm) var(--tuki-space-lg);
+  border-radius: var(--tuki-radius-md);
+}
+
+.btn-tuki-secondary:hover,
+.btn-tuki-secondary:focus {
+  background-color: var(--tuki-color-surface-muted);
+  color: var(--tuki-text-main);
+}
+
+/* Botón de peligro (para borrar, etc.) */
+.btn-tuki-danger {
+  background-color: var(--tuki-color-danger);
+  border-color: var(--tuki-color-danger);
+  color: var(--tuki-text-on-primary);
+}
+
+.btn-tuki-danger:hover,
+.btn-tuki-danger:focus {
+  background-color: #7f1d1d;
+  border-color: #7f1d1d;
+}
+
+/* FORMULARIOS COHERENTES */
+
+.tuki-form {
+  width: 100%;
+  max-width: None;
+}
+
+/* Grupo de campo */
+.tuki-form-group {
+  margin-bottom: var(--tuki-space-lg);
+}
+
+/* Label */
+.tuki-form-label {
+  display: block;
+  font-size: var(--tuki-font-size-sm);
+  font-weight: 500;
+  color: var(--tuki-text-main);
+  margin-bottom: var(--tuki-space-xs);
+}
+
+/* Input / select / textarea */
+.tuki-input {
+  border-radius: var(--tuki-radius-md);
+  border-color: var(--tuki-color-border-subtle);
+  padding: var(--tuki-space-sm) var(--tuki-space-md);
+  font-size: var(--tuki-font-size-base);
+}
+
+.tuki-input:focus {
+  border-color: var(--tuki-color-primary);
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25);
+}
+
+/* Texto de ayuda */
+.tuki-form-help {
+  font-size: var(--tuki-font-size-sm);
+  color: var(--tuki-text-muted);
+  margin-top: var(--tuki-space-xs);
+}
+
+/* Errores */
+.tuki-form-error {
+  font-size: var(--tuki-font-size-sm);
+  color: var(--tuki-color-danger);
+  margin-top: var(--tuki-space-xs);
+}

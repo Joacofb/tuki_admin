@@ -1,0 +1,27 @@
+{# templates/layouts/form_page.html #}
+{% extends "layouts/page_base.html" %}
+
+{% block page_body %}
+<div class="tuki-card">
+  <form method="post" class="tuki-form">
+    {% csrf_token %}
+
+    <div class="row g-3">
+      {% block form_fields %}
+      {# Aquí van los campos concretos del formulario #}
+      {% endblock %}
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      {% block form_actions %}
+      <a href="{% block cancel_url %}#{% endblock %}" class="btn btn-tuki-secondary">
+        Cancelar
+      </a>
+      <button type="submit" class="btn btn-tuki-primary">
+        Guardar
+      </button>
+      {% endblock %}
+    </div>
+  </form>
+</div>
+{% endblock %}
