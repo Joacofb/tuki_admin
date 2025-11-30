@@ -48,6 +48,7 @@ def add_vehicle(request):
         new_name = request.POST.get("vehiclemodel_name", "").strip()
         new_version = request.POST.get("vehiclemodel_version", "").strip()
         new_production = request.POST.get("vehiclemodel_production", "").strip()
+        new_details = request.POST.get("vehiclemodel_details", "").strip()
 
         # Datos del vehículo concreto
         vehicle_plate = request.POST.get("vehicle_plate", "").strip()
@@ -75,6 +76,7 @@ def add_vehicle(request):
                     vehiclemodel_name=new_name,
                     vehiclemodel_version=new_version or None,
                     vehiclemodel_production=new_production or None,
+                    vehiclemodel_details=new_details or None,
                 )
 
         if not errors:
