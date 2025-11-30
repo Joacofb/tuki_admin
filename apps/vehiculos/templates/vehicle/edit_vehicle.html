@@ -1,76 +1,93 @@
-{% extends 'core/base.html' %}
+{% extends "layouts/form_page.html" %}
 
-{% block content %}
+{% block page_title %}
+Editar vehículo
+{% endblock %}
 
-    <div class="my-5 container">
-        <p class="fw-bold text-dark fs-2">Editar Vehiculo</p>
-        <hr class="border border-dark">
-        {% if errors %}
-        <ul class="alert alert-danger">
-            {% for e in errors %}
-            <li>{{ e }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <form id="edit_vehicle" name="edit_vehicle" class="row g-3" method="post">
-            {% csrf_token %}
-            <div>
-                <legend>Seleccionar modelo existente</legend>
-                <select name="vehicle_model_id" class="form-select">
-                    {% for m in vehicle_models %}
-                    <option value="{{ m.vehiclemodel_id }}"
-                            {% if vehicle.vehicle_model and vehicle.vehicle_model.vehiclemodel_id == m.vehiclemodel_id %}
-                                selected
-                            {% endif %}
-                            >
-                        {{ m.vehiclemodel_brand }} {{ m.vehiclemodel_name }} {{ m.vehiclemodel_version }}
-                        ({{ m.vehiclemodel_production }})
-                    </option>
-                    {% endfor %}
-                </select>
+{% block page_subtitle %}
+Patente {{ vehicle.vehicle_plate }}
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{% url 'vehiculos:all' %}" class="btn btn-tuki-secondary">
+    Volver al listado
+    </a>
+{% endblock %}
+
+{% block cancel_url %}
+{% url 'vehiculos:all' %}
+{% endblock %}
+
+{% block form_fields %}
+
+    <div class="col-12">
+        <div class="tuki-form-group">
+            <div class="tuki-card-section-title">
+                Seleccionar modelo existente
             </div>
-            <hr>
-            <div>
-                <legend>Datos del vehiculo</legend>
-                <div class="col-12">
-                    <label for="vehicle_plate" class="form-label">Patente</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        id="vehicle_plate" 
-                        name="vehicle_plate" 
-                        placeholder="{{ vehicle.vehicle_plate }}" 
-                        value="{{ form.data.vehicle_plate|default:vehicle.vehicle_plate }}"
-                    >
-                </div>
-                <div class="col-6">
-                    <label for="vehicle_color" class="form-label">Color</label>
-                    <input 
-                        type="text"
-                        class="form-control" 
-                        id="vehicle_color" 
-                        name="vehicle_color" 
-                        placeholder="{{ vehicle.vehicle_color }}" 
-                        value="{{ form_data.vehicle_color|default:vehicle.vehicle_color }}"
-                    >
-                </div>
-                <div class="col-6">
-                    <label for="vehicle_details" class="form-label">Detalles</label>
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        id="vehicle_details" 
-                        name="vehicle_details" 
-                        placeholder="{{ vehicle.vehicle_details }}" 
-                        value="{{ form_data.vehicle_details|default:vehicle.vehicle_details }}">
-                </div>
+            <select
+                name="vehicle_model_id"
+                class="form-select tuki-input"
+            >
+                {% for m in vehicle_models %}
+                <option value="{{ m.vehiclemodel_id }}"
+                    {% if vehicle.vehicle_model and vehicle.vehicle_model.vehiclemodel_id == m.vehiclemodel_id %}
+                    selected
+                    {% endif %}
+                >
+                    {{ m.vehiclemodel_brand }} {{ m.vehiclemodel_name }} {{ m.vehiclemodel_version }}
+                    ({{ m.vehiclemodel_production }})
+                </option>
+                {% endfor %}
+            </select>
+            <div class="tuki-form-help">
+                Si cambias el modelo, se actualizarán los datos asociados al vehículo.
             </div>
-            <div>
-                <a href="{% url 'core:index' %}" class="btn btn-dark" title="Volver">Volver</a>
-                <button type="submit" class="btn btn-success">Guardar</button>
-                <button type="reset" class="btn btn-dark">Reset</button>
-            </div>
-        </form>
+        </div>
     </div>
-
+    <hr>
+    <legend>Datos del vehiculo</legend>
+    <div class="col-md-6">
+        <div class="tuki-form-group">
+            <label for="vehicle_plate" class="tuki-form-label">Patente</label>
+            <input
+            type="text"
+            id="vehicle_plate"
+            name="vehicle_plate"
+            class="form-control tuki-input"
+            value="{{ vehicle.vehicle_plate }}"
+            placeholder="ABC123"
+            >
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="tuki-form-group">
+            <label for="vehicle_color" class="tuki-form-label">Color</label>
+            <input
+            type="text"
+            id="vehicle_color"
+            name="vehicle_color"
+            class="form-control tuki-input"
+            value="{{ vehicle.vehicle_color }}"
+            placeholder="Negro, Blanco, Rojo..."
+            >
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="tuki-form-group">
+            <label for="vehicle_details" class="tuki-form-label">Detalles</label>
+            <input
+            type="text"
+            id="vehicle_details"
+            name="vehicle_details"
+            class="form-control tuki-input"
+            value="{{ vehicle.vehicle_details }}"
+            placeholder="Alerón roto, service pendiente..."
+            >
+            <div class="tuki-form-help">
+            Información rápida que te sirva al ver el vehículo.
+            </div>
+        </div>
+    </div>
+        
 {% endblock %}
