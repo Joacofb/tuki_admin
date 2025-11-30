@@ -248,4 +248,4 @@ def vehicle(request, vehicle_id):
     get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
     context = {'vehicle': get_vehicle}
 
-    return render(request, 'vehiculos/vehicle.html', context)
+    return render(request, 'vehicle/vehicle.html', context)

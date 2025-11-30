@@ -21,6 +21,7 @@
         <table class="table align-middle table-sm table-light">
             <thead>
                 <tr>
+                    <th class="fw-bold">Patente</th>
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>Detalles</th>
@@ -30,6 +31,7 @@
             <tbody class="table-group-divider">
                 {% for vehicle in page_obj %}
                 <tr>
+                    <td>{{ vehicle.vehicle_plate }}</td>
                     <td>{{ vehicle.vehicle_model.vehiclemodel_brand }}</td>
                     <td>{{ vehicle.vehicle_model.vehiclemodel_name }}</td>
                     <td>{{ vehicle.vehicle_model.vehiclemodel_version }}</td>
