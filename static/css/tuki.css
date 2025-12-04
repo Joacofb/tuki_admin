@@ -96,6 +96,7 @@ body {
 /* CARDS/PANEL */
 
 .tuki-card {
+  width: 100%;
   background-color: var(--tuki-color-surface);
   border-radius: var(--tuki-radius-lg);
   box-shadow: var(--tuki-shadow-soft);
@@ -225,4 +226,91 @@ body {
   font-size: var(--tuki-font-size-sm);
   color: var(--tuki-color-danger);
   margin-top: var(--tuki-space-xs);
+}
+
+
+/* Contenedor responsivo para tablas */
+.tuki-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Tabla base */
+.tuki-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--tuki-font-size-sm);
+  color: var(--tuki-text-main);
+}
+
+/* Head */
+.tuki-table thead {
+  background-color: var(--tuki-color-surface-muted);
+}
+
+.tuki-table th {
+  padding: var(--tuki-space-sm) var(--tuki-space-md);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  color: var(--tuki-text-muted);
+  border-bottom: 1px solid var(--tuki-color-border-subtle);
+  white-space: nowrap;
+}
+
+/* Cuerpo */
+.tuki-table td {
+  padding: var(--tuki-space-sm) var(--tuki-space-md);
+  border-bottom: 1px solid var(--tuki-color-border-subtle);
+  vertical-align: middle;
+}
+
+/* Filas alternadas */
+.tuki-table tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+/* Hover */
+.tuki-table tbody tr:hover {
+  background-color: #e5edff; /* tono muy suave ligado al primario */
+}
+
+/* Celdas numéricas o alineadas a la derecha */
+.tuki-table td.tuki-cell-right,
+.tuki-table th.tuki-cell-right {
+  text-align: right;
+}
+
+/* Columna “acciones” centrada y estrecha */
+.tuki-table td.tuki-cell-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Pequeñas badges para estados */
+.tuki-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.tuki-badge-success {
+  background-color: rgba(22, 163, 74, 0.1);
+  color: var(--tuki-color-success);
+}
+
+.tuki-badge-warning {
+  background-color: rgba(234, 179, 8, 0.12);
+  color: var(--tuki-color-warning);
+}
+
+.tuki-badge-danger {
+  background-color: rgba(220, 38, 38, 0.12);
+  color: var(--tuki-color-danger);
 }
