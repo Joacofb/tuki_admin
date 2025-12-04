@@ -239,6 +239,7 @@ def all_vehicles(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
+        'vehicles': vehicles,
         'page_obj': page_obj,
         'search_data': search_data,
     }
