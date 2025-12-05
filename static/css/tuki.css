@@ -119,7 +119,6 @@ body {
 }
 
 .tuki-card-subtitle {
-  font-size: var(--tuki-font-size-sm);
   color: var(--tuki-text-muted);
   margin-top: var(--tuki-space-xs);
 }
