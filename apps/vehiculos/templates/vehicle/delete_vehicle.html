@@ -1,17 +1,22 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-  <div class="card my-5">
-    <div class="card-body p-5 text-center">
-      <h5 class="card-text text-danger fw-bold">ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?</h5>
+  <div class="tuki-card">
+    <div class="text-center">
+      <h5 class="tuki-card-section-title text-danger fs-3 fw-bold">ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?</h5>
       <hr />
-      <p class="card-text">Marca: {{ vehicle.vehicle_brand }} - Modelo: {{ vehicle.vehicle_model }}, {{ vehicle.vehicle_version }}. {{ vehicle.vehicle_production }}</p>
-      <p class="card-text fw-bold">NO PODRAS DESHACER ESTA ACCION</p>
+      <p class="fw-bold fs-5">PATENTE: {{ vehicle.vehicle_plate }}</p>
+      <p class="">Vehiculo: {{ vehicle.vehicle_model }} - {{ vehicle.vehicle_model.vehiclemodel_production }}</p>
+      <p class="">Cliente: {{ vehicle.vehicle_customer.customer_name }}</p>
+      <p class="text-uppercase text-secondary">El vehiculo tiene 3 trabajos asociados <a class="text-decoration-none" href="{% url 'vehiculos:vehicle' vehicle.vehicle_id %}">Ver</a> </p>
+      <hr />
       <form method="POST" class="d-flex justify-content-around">
         {% csrf_token %}
-        <button type="submit" class="btn btn-outline-danger">Si, eliminar</button>
-        <a href="{% url 'vehiculos:all' %}" class="btn btn-outline-dark">Cancelar</a>
+        <button type="submit" class="btn btn-tuki-danger">Si, eliminar</button>
+        <a href="{% url 'vehiculos:edit' vehicle.vehicle_id %}" class="btn btn-tuki-secondary">Cancelar</a>
       </form>
+      <hr>
+      <p class="tuki-card-section-title fw-bold fs-5">NO PODRAS DESHACER ESTA ACCION</p>
     </div>
   </div>
 {% endblock %}

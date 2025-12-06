@@ -89,5 +89,6 @@ Patente {{ vehicle.vehicle_plate }}
             </div>
         </div>
     </div>
+    <a href="{% url 'vehiculos:delete' vehicle.vehicle_id %}" class="link-danger">Eliminar registro</a>
         
 {% endblock %}
