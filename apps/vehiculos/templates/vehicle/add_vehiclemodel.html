@@ -1,0 +1,83 @@
+{% extends "layouts/form_page.html" %}
+
+{% block page_title %}
+Crear Modelos / Vehiculos
+{% endblock %}
+
+{% block page_actions %}
+    <a href="" class="btn btn-tuki-secondary">
+    Volver
+    </a>
+{% endblock %}
+
+{% block cancel_url %}
+{% url 'vehiculos:all' %}
+{% endblock %}
+
+{% block form_fields %}
+    <div class="tuki-card-header tuki-card-section-title">
+        <h1 class="fs-5">Cree un modelo nuevo</h1>
+        <a class="text-decoration-none" href="{% url 'vehiculos:allmodels' %}">Ver listado completo</a>
+    </div>
+
+    <div>
+        <label for="vehiclemodel_brand" class="tuki-form-label">Marca</label>
+        <select 
+        name="vehiclemodel_brand" 
+        id="vehiclemodel_brand" 
+        class="form-select tuki-input" 
+        value="{{ form_data.vehiclemodel_brand|default:'' }}"
+        >
+            <option value="" selected>-- Elegir marca --</option>
+
+            {% for brand in brands %}
+                <option value="{{ brand.0 }}">{{ brand.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-12">
+        <label for="vehiclemodel_name" class="tuki-form-label">Modelo</label>
+        <input 
+        type="text" 
+        id="vehiclemodel_name" 
+        name="vehiclemodel_name" 
+        class="form-control tuki-input" 
+        value="{{ form_data.vehiclemodel_name|default:'' }}"
+        placeholder="Corsa II" 
+        >
+    </div>
+    <div class="col-6">
+        <label for="vehiclemodel_version" class="tuki-form-label">Version</label>
+        <input 
+        type="text" 
+        id="vehiclemodel_version" 
+        name="vehiclemodel_version" 
+        class="form-control tuki-input" 
+        value="{{ form_data.vehiclemodel_version|default:'' }}"
+        placeholder="1.4" 
+        >
+    </div>
+    <div class="col-6">
+        <label for="vehiclemodel_production" class="tuki-form-label">Fabricado</label>
+        <input 
+        type="text" 
+        id="vehiclemodel_production" 
+        name="vehiclemodel_production" 
+        class="form-control tuki-input" 
+        value="{{ form_data.vehiclemodel_production|default:'' }}"
+        placeholder="2009-2018" 
+        >
+    </div>
+    <div class="col-12">
+        <label for="vehiclemodel_details" class="tuki-form-label">Detalles</label>
+        <input 
+        type="text" 
+        id="vehiclemodel_details" 
+        name="vehiclemodel_details" 
+        class="form-control tuki-input" 
+        value="{{ form_data.vehiclemodel_details|default:'' }}"
+        placeholder="Detalles Adicionales"
+        >
+    </div>
+</div>
+{% endblock %}

@@ -2,30 +2,29 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import BRAND_CHOICES, Vehicle, VehicleModel
 from django.db.models import Q
-# from .forms import VehicleForm
 
 
-# def add_vehicle(request):
-#     context = {'brands': BRAND_CHOICES}
+def add_vehiclemodel(request):
+    context = {'brands': BRAND_CHOICES}
 
-#     if request.method == 'POST':
-#         vehicle_brand = request.POST.get('vehicle_brand', '')
-#         vehicle_model = request.POST.get('vehicle_model', '')
-#         vehicle_version = request.POST.get('vehicle_version', '')
-#         vehicle_production = request.POST.get('vehicle_production', '')
-#         vehicle_details = request.POST.get('vehicle_details', '')
+    if request.method == 'POST':
+        vehiclemodel_brand = request.POST.get('vehiclemodel_brand', '')
+        vehiclemodel_name = request.POST.get('vehiclemodel_name', '')
+        vehiclemodel_version = request.POST.get('vehiclemodel_version', '')
+        vehiclemodel_production = request.POST.get('vehiclemodel_production', '')
+        vehiclemodel_details = request.POST.get('vehiclemodel_details', '')
 
-#         if vehicle_brand and vehicle_model and vehicle_version:
-#             Vehicle.objects.create(
-#                 vehicle_brand=vehicle_brand,
-#                 vehicle_model=vehicle_model,
-#                 vehicle_version=vehicle_version,
-#                 vehicle_production=vehicle_production,
-#                 vehicle_details=vehicle_details,
-#             )
-#             return redirect('vehiculos:all')
+        if vehiclemodel_brand and vehiclemodel_name and vehiclemodel_version:
+            VehicleModel.objects.create(
+                vehiclemodel_brand=vehiclemodel_brand,
+                vehiclemodel_name=vehiclemodel_name,
+                vehiclemodel_version=vehiclemodel_version,
+                vehiclemodel_production=vehiclemodel_production,
+                vehiclemodel_details=vehiclemodel_details,
+            )
+            return redirect('vehiculos:allmodels')
 
-#     return render(request, 'vehicle/add_vehicle.html', context)
+    return render(request, 'vehicle/add_vehiclemodel.html', context)
 
 
 def add_vehicle(request):
@@ -164,44 +163,6 @@ def edit_vehicle(request, vehicle_id):
             
     return render(request, "vehicle/edit_vehicle.html", context)
 
-# def edit_vehicle(request, vehicle_id):
-#     # get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
-#     #
-#     # if request.method == 'POST':
-#     #     form = VehicleForm(request.POST, instance=get_vehicle)
-#     #     if form.is_valid():
-#     #         form.save()
-#     #         return redirect('/vehicles/all')  # O redirigir a la página de detalles del vehículo
-#     # else:
-#     #     form = VehicleForm(instance=get_vehicle)
-#     #
-#     # return render(request, 'vehicle/edit_vehicle.html', {'form': form, 'vehicle': vehicle})
-
-#     # get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
-#     # context = {'vehicle': get_vehicle}
-
-#     # if request.method == 'POST':
-#     #     vehicle_brand = request.POST.get('vehicle_brand', '')
-#     #     vehicle_model = request.POST.get('vehicle_model', '')
-#     #     vehicle_version = request.POST.get('vehicle_version', '')
-#     #     vehicle_production = request.POST.get('vehicle_production', '')
-#     #     vehicle_details = request.POST.get('vehicle_details', '')
-
-#     #     if vehicle_brand and vehicle_model and vehicle_version:
-#     #         get_vehicle.vehicle_brand = vehicle_brand
-#     #         get_vehicle.vehicle_model = vehicle_model
-#     #         get_vehicle.vehicle_version = vehicle_version
-#     #         get_vehicle.vehicle_production = vehicle_production
-#     #         get_vehicle.vehicle_details = vehicle_details
-
-#     #         get_vehicle.save()
-
-#     #         return redirect('vehiculos:vehicle', vehicle_id=vehicle_id)
-
-#     # return render(request, 'vehicle/edit_vehicle.html', context)
-
-
-
 
 def delete_vehicle(request, vehicle_id):
     get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
@@ -216,11 +177,6 @@ def delete_vehicle(request, vehicle_id):
 
 def all_vehicles(request):
     search_data = request.GET.get('search_vehicle', '')
-
-    # if search_data:
-    #     vehicles = Vehicle.objects.filter(vehicle_model__icontains=search_data).order_by('vehicle_brand')
-    # else:
-    #     vehicles = Vehicle.objects.all().order_by('vehicle_brand')
 
     vehicles = Vehicle.objects.select_related('vehicle_model', 'vehicle_customer')
 
@@ -245,6 +201,30 @@ def all_vehicles(request):
     }
 
     return render(request, 'vehicle/all_vehicles.html', context)
+
+
+def all_vehiclemodels(request):
+    search_data = request.GET.get('search_vehicle', '')
+
+    vehiclemodels = VehicleModel.objects.all().order_by("vehiclemodel_brand")
+
+    if search_data:
+        vehiclemodels = vehiclemodels.filter(
+            Q(vehiclemodel_brand__icontains=search_data)
+            | Q(vehiclemodel_name__icontains=search_data)
+        )
+
+    paginator = Paginator(vehiclemodels, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'vehiclemodels': vehiclemodels,
+        'page_obj': page_obj,
+        'search_data': search_data,
+    }
+
+    return render(request, 'vehicle/all_vehiclemodels.html', context)
 
 
 def vehicle(request, vehicle_id):

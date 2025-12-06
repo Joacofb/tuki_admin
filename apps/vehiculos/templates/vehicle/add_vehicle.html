@@ -33,7 +33,8 @@ Agregar Vehiculo / Cliente
                 {% endfor %}
             </select>
             <div class="tuki-form-help">
-                Si seleccionas el modelo, se utilizara el mismo aunque agregues uno nuevo.
+                <p>Si seleccionas el modelo, se utilizara el mismo aunque agregues uno nuevo.</p>
+                <a href="{% url 'vehiculos:allmodels' %}">VER BBDD VEHICULOS/MODELOS</a>
             </div>
         </div>
     </div>
