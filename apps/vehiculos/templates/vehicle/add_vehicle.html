@@ -33,8 +33,7 @@ Agregar Vehiculo / Cliente
                 {% endfor %}
             </select>
             <div class="tuki-form-help">
-                <p>Si seleccionas el modelo, se utilizara el mismo aunque agregues uno nuevo.</p>
-                <a href="{% url 'vehiculos:allmodels' %}">VER BBDD VEHICULOS/MODELOS</a>
+                <p>Si seleccionas el modelo, se utilizara el seleccionado aunque crees uno nuevo debajo.</p>
             </div>
         </div>
     </div>
@@ -165,10 +164,6 @@ Agregar Vehiculo / Cliente
                     <option value="{{ c.customer_id }}">{{ c.customer_name }}</option>
                 {% endfor %}
             </select>
-            <div class="tuki-form-help">
-                <a href="" class="text-decoration-none">AGREGAR</a>
-                <a href="">VER BBDD CLIENTES</a>
-            </div>
         </div>
     </div>
 {% endblock %}
