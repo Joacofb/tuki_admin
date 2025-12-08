@@ -41,7 +41,7 @@ Patente {{ vehicle.vehicle_plate }}
                 {% endfor %}
             </select>
             <div class="tuki-form-help">
-                Si cambias el modelo, se actualizarán los datos asociados al vehículo.
+                <a href="{% url 'vehiculos:addmodel' %}" class="text-decoration-none fw-bold">AGREGAR</a>
             </div>
         </div>
     </div>
@@ -89,6 +89,27 @@ Patente {{ vehicle.vehicle_plate }}
             </div>
         </div>
     </div>
-    <a href="{% url 'vehiculos:delete' vehicle.vehicle_id %}" class="link-danger">Eliminar registro</a>
-        
+    <hr>
+    <div class="col-12">
+        <div class="tuki-form-group">
+            <div class="tuki-card-section-title">
+                Seleccionar cliente existente
+            </div>
+            <select name="vehicle_customer" id="vehicle_customer" class="form-select tuki-input">
+                {% for c in customers %}
+                <option value="{{ c.customer_id }}"
+                {% if vehicle.vehicle_customer and vehicle.vehicle_customer.customer_id == c.customer_id %}
+                selected
+                {% endif %}
+                >
+                {{ c.customer_name }} {{ c.customer_phone }}
+            </option>
+            {% endfor %}
+        </select>
+        <div class="tuki-form-help">
+            <a href="" class="text-decoration-none fw-bold">AGREGAR</a>
+        </div>
+    </div>
+    <a href="{% url 'vehiculos:delete' vehicle.vehicle_id %}" class="link-danger text-decoration-none fw-bold text-uppercase">Eliminar registro</a>
+</div>
 {% endblock %}

@@ -114,11 +114,13 @@ def edit_vehicle(request, vehicle_id):
     vehicle_models = VehicleModel.objects.all().order_by(
         "vehiclemodel_brand", "vehiclemodel_name", "vehiclemodel_version"
     )
+    
+    customers = Customer.objects.all().order_by("customer_name")
         
     context = {
-        "brands": BRAND_CHOICES,
         "vehicle_models": vehicle_models,
         "vehicle": vehicle,
+        "customers": customers,
         "errors": [],
     }
 
@@ -133,6 +135,7 @@ def edit_vehicle(request, vehicle_id):
         vehicle_plate = request.POST.get("vehicle_plate", "").strip()
         vehicle_color = request.POST.get("vehicle_color", "").strip()
         vehicle_details = request.POST.get("vehicle_details", "").strip()
+        customer_id = request.POST.get("vehicle_customer", "").strip()
 
         print("DEBUG read from POST:")
         print("  existing_model_id:", repr(existing_model_id))
@@ -164,10 +167,15 @@ def edit_vehicle(request, vehicle_id):
 
             print("DEBUG to save:", vehicle_id)
 
+            if customer_id:
+                vehicle.vehicle_customer = Customer.objects.filter(customer_id=customer_id).first()
+            else:
+                vehicle.vehicle_customer = None
+
             vehicle.save()
 
             print("DEBUG after save:", Vehicle.objects.get(pk=vehicle.pk).vehicle_details)
-            return redirect("vehiculos:all")
+            return redirect('vehiculos:vehicle', vehicle_id=vehicle_id)
         
         # Si hubo errores, los devolvemos al template
         context["errors"] = errors
