@@ -37,15 +37,15 @@ class VehicleModel(models.Model):
     def __str__(self):
         return f'{self.vehiclemodel_brand} - {self.vehiclemodel_name} - {self.vehiclemodel_version}'
 
-# from customer.models import Customer
+from customer.models import Customer
 
 class Vehicle(models.Model):
     vehicle_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     # Nuevo: el duenio del auto
     vehicle_customer = models.ForeignKey(
-        'customer.Customer',
-        related_name='vehicles',
+        Customer,
+        related_name='customer',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import BRAND_CHOICES, Vehicle, VehicleModel
+from customer.models import Customer
 from django.db.models import Q
 
 
@@ -32,9 +33,12 @@ def add_vehicle(request):
         "vehiclemodel_brand", "vehiclemodel_name", "vehiclemodel_version"
     )
 
+    customers = Customer.objects.all().order_by('customer_name')
+
     context = {
         "brands": BRAND_CHOICES,
         "vehicle_models": vehicle_models,
+        "customers": customers,
         "errors": [],
     }
 
@@ -53,6 +57,9 @@ def add_vehicle(request):
         vehicle_plate = request.POST.get("vehicle_plate", "").strip()
         vehicle_color = request.POST.get("vehicle_color", "").strip()
         vehicle_details = request.POST.get("vehicle_details", "").strip()
+
+        # Datos del cliente
+        customer_id = request.POST.get("vehicle_customer", "").strip()
 
         errors = []
         vehicle_model_obj = None
@@ -77,14 +84,19 @@ def add_vehicle(request):
                     vehiclemodel_production=new_production or None,
                     vehiclemodel_details=new_details or None,
                 )
+        
+        vehicle_customer = None
+        if customer_id:
+            vehicle_customer = Customer.objects.filter(customer_id=customer_id).first()
+
 
         if not errors:
             Vehicle.objects.create(
                 vehicle_model=vehicle_model_obj,
+                vehicle_customer=vehicle_customer,
                 vehicle_plate=vehicle_plate or None,
                 vehicle_color=vehicle_color or None,
                 vehicle_details=vehicle_details or None,
-                # más adelante acá vas a meter vehicle_customer
             )
             return redirect("vehiculos:all")
 

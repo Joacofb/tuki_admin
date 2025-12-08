@@ -26,7 +26,7 @@ Agregar Vehiculo / Cliente
             >
                 <option value="">-- Ninguno (crear uno nuevo abajo) --</option>
                 {% for m in vehicle_models %}
-                <option value="{{ form_data.vehiclemodel_id|default:'' }}">
+                <option value="{{ m.vehiclemodel_id }}">
                     {{ m.vehiclemodel_brand }} {{ m.vehiclemodel_name }} {{ m.vehiclemodel_version }}
                     ({{ m.vehiclemodel_production }})
                 </option>
@@ -149,6 +149,25 @@ Agregar Vehiculo / Cliente
             >
             <div class="tuki-form-help">
             Información rápida que te sirva al ver el vehículo.
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="col-12">
+        <div class="tuki-form-group">
+            <div class="tuki-card-section-title">
+                Seleccionar cliente existente
+            </div>
+            <label for="vehicle_customer" class="form-label">Cliente</label>
+            <select name="vehicle_customer" id="vehicle_customer" class="form-select">
+                <option value="">-- Sin cliente asignado --</option>
+                {% for c in customers %}
+                    <option value="{{ c.customer_id }}">{{ c.customer_name }}</option>
+                {% endfor %}
+            </select>
+            <div class="tuki-form-help">
+                <a href="" class="text-decoration-none">AGREGAR</a>
+                <a href="">VER BBDD CLIENTES</a>
             </div>
         </div>
     </div>
