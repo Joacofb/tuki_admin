@@ -38,6 +38,7 @@ Vehiculos registrados
                     <th class="fw-bold">Patente</th>
                     <th>Modelo</th>
                     <th>Produccion</th>
+                    <th class="text-center">Cliente</th>
                     <th class="text-center">ACCIONES</th>
                 </tr>
             </thead>
@@ -47,6 +48,11 @@ Vehiculos registrados
                     <td>{{ vehicle.vehicle_plate }}</td>
                     <td>{{ vehicle.vehicle_model.vehiclemodel_brand }} {{ vehicle.vehicle_model.vehiclemodel_name }} {{ vehicle.vehicle_model.vehiclemodel_version }}</td>
                     <td>{{ vehicle.vehicle_model.vehiclemodel_production }}</td>
+                    {% if vehicle.vehicle_customer.customer_id %}
+                        <td class="text-center">SI</td>
+                    {% else %}
+                        <td class="text-center">NO</td>
+                    {% endif %}    
                     <td class="tuki-cell-actions">
                         <a href="{% url 'vehiculos:vehicle' vehicle.vehicle_id %}" class="btn btn-sm btn-tuki-secondary">
                         Ver
