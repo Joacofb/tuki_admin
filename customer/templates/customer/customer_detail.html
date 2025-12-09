@@ -1,35 +1,73 @@
-{% extends "core/base.html" %}
+{% extends "layouts/page_base.html" %}
 
-{% block content %}
-<div class="card my-2">
-  <div class="card-body">
-    <h1 class="card-title fw-bold">{{ customer.customer_name }}</h1>
-    
+{% block page_title %}
+Informacion cliente
+{% endblock %}
+
+{% block page_body %}
+<div class="tuki-card">
+  <div class="tuki-card-header">
+    <h1 class="tuki-card-title fw-bold">{{ customer.customer_name }}</h1>
+  </div>
+  <div>
     <p class="fw-bold">Teléfono: {{ customer.customer_phone }}</p>
     <p>Email: {{ customer.customer_email }}</p>
     <p>Dirección: {{ customer.customer_address }}</p>
   </div>
-</div>
-<hr/>
-<h2 class="card-header fw-bold">Vehículos</h2>
-<div class="card my-2">
-  <div class="card-body">
+  
+  <a href="" class="btn btn-tuki-secondary">Editar</a>
+
+    <hr>
+
+    <div class="tuki-inline">
+      <p class="tuki-card-title fw-bold tuki-inline-grow text-uppercase">Vehículos</p>
+  
+      <a href="{% url 'vehiculos:add' %}?customer={{ customer.customer_id }}" class="btn btn-tuki-primary">Agregar</a>
+    </div>
+
     {% if vehicle_workorders %}
       {% for vehicle, workorders in vehicle_workorders %}
-        <h2 class="card-title fw-bold">{{ vehicle.vehicle_plate }}</h2>
-        <h3>{{ vehicle.vehicle_model }}</h3>
-        <p>Color: {{ vehicle.vehicle_color }}</p>
-        <p>Detalles: {{ vehicle.vehicle_details }}</p>
-    
-        <h4>Últimos trabajos</h4>
+        <hr>
+        <div class="tuki-inline">
+            <h2 class="tuki-card-title fs-4 tuki-inline-grow">{{ vehicle.vehicle_plate }}</h2>
+            <a href="" class="text-decoration-none text-uppercase">Editar Info</a>
+        </div>
+        <p class="tuki-card-subtitle fw-bold">{{ vehicle.vehicle_model }}</p>
+        <div class="tuki-inline">
+          <p class="tuki-inline-grow tuki-card-title fs-4">Últimos trabajos</p>
+          <a href="" class="text-decoration-none text-uppercase">Agregar Trabajo</a>
+        </div>
+        
         {% if workorders %}
-          <ul>
-            {% for w in workorders %}
-              <li>
-                {{ w.date }} - {{ w.status }} - {{ w.total_amount }}
-              </li>
-            {% endfor %}
-          </ul>
+          {% for w in workorders %}
+            <div class="tuki-table-wrapper">
+              <table class="tuki-table">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                    <th class="text-center tuki-col-tight">Monto</th>
+                    <th class="text-center tuki-col-tight">ACCIONES</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ w.date }}</td>
+                    <td>{{ w.status }}</td>
+                    <td>Silenciador Trasero + Soldadura</td>
+                    <td class="tuki-col-tight">{{ w.total_amount }}</td>
+                    <td class="tuki-col-tight">
+                      <a href="" class="btn btn-tuki-secondary">Ver</a>
+                      <a href="" class="btn btn-tuki-secondary">Editar</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            
+          {% endfor %}
         {% else %}
           <p>Sin trabajos registrados.</p>
         {% endif %}
@@ -37,7 +75,6 @@
     {% else %}
       <p>Este cliente no tiene vehículos asociados.</p>
     {% endif %}
-  </div>
 </div>
 
 <div>
@@ -47,3 +84,4 @@
 </div>
 
 {% endblock %}
+

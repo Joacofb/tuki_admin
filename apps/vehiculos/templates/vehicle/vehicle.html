@@ -38,6 +38,7 @@ Info cliente:
           <p>{{ vehicle.vehicle_customer.customer_name }}</p>
           <p class="tuki-card-section-title">Telefono</p>
           <p>{{ vehicle.vehicle_customer.customer_phone }}</p>
+          <a href="{% url 'customer:detail' vehicle.vehicle_customer.customer_id %}">VER CLIENTE</a>
 
         {% else %}
 
@@ -115,7 +116,6 @@ Info cliente:
           </tr>
         </tbody>
       </table>
-
     </div>
   </div>
 

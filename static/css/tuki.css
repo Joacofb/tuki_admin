@@ -313,3 +313,25 @@ body {
   background-color: rgba(220, 38, 38, 0.12);
   color: var(--tuki-color-danger);
 }
+
+.tuki-inline {
+  display: flex;
+  align-items: center;                /* alineados verticalmente */
+  gap: var(--tuki-space-sm);          /* espacio entre ellos */
+}
+
+.tuki-inline-grow {
+  flex: 1 1 auto;                     /* ocupa todo lo posible */
+}
+
+/* Columna lo más estrecha posible (ideal para Acciones) */
+.tuki-col-tight {
+  width: 1%;
+  white-space: nowrap;        /* que no haga saltos de línea */
+}
+
+/* opcional: alinear a la derecha si es numérica / acciones */
+.tuki-cell-right,
+.tuki-col-tight {
+  text-align: right;
+}
