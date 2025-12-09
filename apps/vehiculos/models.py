@@ -44,8 +44,8 @@ class Vehicle(models.Model):
 
     # Nuevo: el duenio del auto
     vehicle_customer = models.ForeignKey(
-        Customer,
-        related_name='customer',
+        'customer.Customer',
+        related_name='vehicles',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
