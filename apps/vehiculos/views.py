@@ -91,14 +91,16 @@ def add_vehicle(request):
 
 
         if not errors:
-            Vehicle.objects.create(
+            vehicle = Vehicle.objects.create(
                 vehicle_model=vehicle_model_obj,
                 vehicle_customer=vehicle_customer,
                 vehicle_plate=vehicle_plate or None,
                 vehicle_color=vehicle_color or None,
                 vehicle_details=vehicle_details or None,
             )
-            return redirect("vehiculos:all")
+            
+            return redirect('vehiculos:vehicle', vehicle_id=vehicle.vehicle_id)
+
 
         # Si hubo errores, los devolvemos al template
         context["errors"] = errors
@@ -248,7 +250,24 @@ def all_vehiclemodels(request):
 
 
 def vehicle(request, vehicle_id):
-    get_vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
-    context = {'vehicle': get_vehicle}
+    vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+    customers = Customer.objects.all().order_by("customer_name")
 
+    if request.method == 'POST':
+        customer_id = request.POST.get("vehicle_customer", "").strip()
+
+        if customer_id:
+            vehicle.vehicle_customer = Customer.objects.filter(customer_id=customer_id).first()
+        else:
+            vehicle.vehicle_customer = None
+
+        vehicle.save()
+
+        return redirect('vehiculos:vehicle', vehicle_id=vehicle_id)
+
+    context = {
+        'vehicle': vehicle,
+        'customers': customers,
+        }
+    
     return render(request, 'vehicle/vehicle.html', context)

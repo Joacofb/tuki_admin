@@ -28,23 +28,59 @@ Info cliente:
       </a>
     </div>
     <hr>
+
     <div>
       <div>
-        <p class="tuki-card-section-title">Nombre cliente</p>
-        <p>{{ vehicle.vehicle_customer.customer_name }}</p>
-        <p class="tuki-card-section-title">Telefono</p>
-        <p>{{ vehicle.vehicle_customer.customer_phone }}</p>
-      </div>
-      <div>
-        <a href="" class="btn btn-tuki-secondary">
-          Ver
-        </a>
-        <a href="">
-          Editar
-        </a>
+
+        {% if vehicle.vehicle_customer.customer_name %}
+
+          <p class="tuki-card-section-title">Nombre cliente</p>
+          <p>{{ vehicle.vehicle_customer.customer_name }}</p>
+          <p class="tuki-card-section-title">Telefono</p>
+          <p>{{ vehicle.vehicle_customer.customer_phone }}</p>
+
+        {% else %}
+
+          <form method="post" action=".">
+            {% csrf_token %}
+
+            <div class="tuki-form-group">
+              <div class="tuki-card-section-title">
+                Seleccionar cliente existente
+              </div>
+
+              <label for="vehicle_customer" class="tuki-form-label">Cliente</label>
+
+              <div class="row g-2">
+                <div class="col-12 col-md-9">
+                  <select
+                    name="vehicle_customer"
+                    id="vehicle_customer"
+                    class="form-select tuki-input"
+                  >
+                    <option value="">-- Sin cliente asignado --</option>
+                    {% for c in customers %}
+                      <option value="{{ c.customer_id }}">{{ c.customer_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="col-12 col-md-3 d-grid">
+                  <button type="submit" class="btn btn-tuki-primary">
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        {% endif %}
+
       </div>
     </div>
+
     <hr>
+
     <p class="tuki-card-section-title">Trabajos realizados</p>
     <div class="tuki-table-wrapper">
       <table class="tuki-table">
