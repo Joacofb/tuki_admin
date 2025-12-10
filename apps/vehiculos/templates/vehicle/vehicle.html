@@ -79,71 +79,49 @@ Info cliente:
 
       </div>
     </div>
-
+    
     <hr>
+      
+    <div class="tuki-inline">
+      <p class="tuki-card-title tuki-inline-grow text-uppercase">Trabajos recientes</p>
+      <a href="" class="text-uppercase text-decoration-none">Crear nuevo trabajo</a>
+    </div>
 
     {% if workorders %}
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th>Total</th>
-            <th>Ver</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for w in workorders %}
+      <p class="tuki-card-section-title">Trabajos realizados</p>
+      <div class="tuki-table-wrapper">
+        <table class="tuki-table">
+          <thead>
             <tr>
-              <td>{{ w.date }}</td>
-              <td>{{ w.get_status_display }}</td>
-              <td>{{ w.total_amount }}</td>
-              <td>
-                <a href="{% url 'workorder:workorder' w.workorder_id %}">Detalle</a>
-              </td>
+              <th>Fecha</th>
+              <th>Detalle</th>
+              <th>Estado</th>
+              <th>Monto</th>
+              <th class="text-center">ACCIONES</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for w in workorders %}
+              <tr>
+                <td>{{ w.date }}</td>
+                <td>Silenciador Trasero</td>
+                <td>{{ w.get_status_display }}</td>
+                <td>{{ w.total_amount }}</td>
+                <td class="tuki-cell-actions tuki-col-tight">
+                  <a href="{% url 'workorder:workorder' w.workorder_id %}" class="btn btn-sm btn-tuki-primary">
+                  Detalle
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% else %}
-      <p>No hay trabajos registrados para este vehículo.</p>
+      <p class="text-uppercase">No hay trabajos registrados para este vehiculo</p>  
     {% endif %}
 
-    <p class="tuki-card-section-title">Trabajos realizados</p>
-    <div class="tuki-table-wrapper">
-      <table class="tuki-table">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Detalle</th>
-            <th>Monto</th>
-            <th class="text-center">ACCIONES</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>04/05/2025</td>
-            <td>Cambio SIL. TRASERO</td>
-            <td>$45.000</td>
-            <td class="tuki-cell-actions">
-              <a href="" class="btn btn-sm btn-tuki-primary">
-              Editar
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>10/03/2023</td>
-            <td>Cambio SIL. TRASERO</td>
-            <td>$10.000</td>
-            <td class="tuki-cell-actions">
-              <a href="" class="btn btn-sm btn-tuki-primary">
-              Editar
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
   </div>
 
 {% endblock %}
