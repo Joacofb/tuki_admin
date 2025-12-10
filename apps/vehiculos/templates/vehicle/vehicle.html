@@ -84,7 +84,7 @@ Info cliente:
       
     <div class="tuki-inline">
       <p class="tuki-card-title tuki-inline-grow text-uppercase">Trabajos recientes</p>
-      <a href="" class="text-uppercase text-decoration-none">Crear nuevo trabajo</a>
+      <a href="{% url 'workorder:add_for_vehicle' vehicle.vehicle_id %}" class="text-uppercase text-decoration-none">Crear nuevo trabajo</a>
     </div>
 
     {% if workorders %}
@@ -104,7 +104,7 @@ Info cliente:
             {% for w in workorders %}
               <tr>
                 <td>{{ w.date }}</td>
-                <td>Silenciador Trasero</td>
+                <td>{{ w.notes }}</td>
                 <td>{{ w.get_status_display }}</td>
                 <td>{{ w.total_amount }}</td>
                 <td class="tuki-cell-actions tuki-col-tight">

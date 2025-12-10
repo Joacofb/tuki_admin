@@ -1,1 +1,60 @@
-<h1>funciono</h1>
+{% extends "layouts/page_base.html" %}
+
+{% block page_body %}
+<div class="tuki-card">
+    <div class="tuki-inline">
+        <h1 class="tuki-card-title text-uppercase tuki-inline-grow">Detalle del trabajo</h1>
+        <a class="btn btn-tuki-primary text-uppercase" href="{% url 'vehiculos:vehicle' workorder.vehicle.vehicle_id %}">Volver al vehículo</a>
+    </div>
+    
+    <hr>
+    
+    <p><strong>Vehículo:</strong>
+      {% if workorder.vehicle.vehicle_model %}
+        {{ workorder.vehicle.vehicle_model.vehiclemodel_brand }}
+        {{ workorder.vehicle.vehicle_model.vehiclemodel_name }}
+      {% endif %}
+        - {{ workorder.vehicle.vehicle_plate }}
+    </p>
+    
+    <p><strong>Cliente:</strong> {{ workorder.customer.customer_name }}</p>
+    <p><strong>Fecha:</strong> {{ workorder.date }}</p>
+    <p><strong>Estado:</strong> {{ workorder.get_status_display }}</p>
+    <p><strong>Kilometraje:</strong> {{ workorder.mileage }}</p>
+    <p><strong>Notas:</strong> {{ workorder.notes }}</p>
+
+    <hr>
+    
+    <h3 class="tuki-card-title text-uppercase">Productos utilizados</h3>
+    
+    {% if items %}
+    <div class="table-wrapper">
+        <table class="tuki-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio unitario</th>
+              <th>Descuento</th>
+              <th>Total línea</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td>{{ item.product.product_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unit_price }}</td>
+                <td>{{ item.discount }}</td>
+                <td>{{ item.total_line }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    {% else %}
+      <p>No hay productos asociados a este trabajo todavía.</p>
+    {% endif %}
+    
+</div>
+{% endblock %}
