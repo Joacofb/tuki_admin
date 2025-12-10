@@ -252,6 +252,7 @@ def all_vehiclemodels(request):
 def vehicle(request, vehicle_id):
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
     customers = Customer.objects.all().order_by("customer_name")
+    workorders = vehicle.workorders.order_by('-date')[:10]
 
     if request.method == 'POST':
         customer_id = request.POST.get("vehicle_customer", "").strip()
@@ -268,6 +269,7 @@ def vehicle(request, vehicle_id):
     context = {
         'vehicle': vehicle,
         'customers': customers,
+        'workorders': workorders,
         }
     
     return render(request, 'vehicle/vehicle.html', context)

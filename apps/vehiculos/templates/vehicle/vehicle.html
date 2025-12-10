@@ -82,6 +82,33 @@ Info cliente:
 
     <hr>
 
+    {% if workorders %}
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Total</th>
+            <th>Ver</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for w in workorders %}
+            <tr>
+              <td>{{ w.date }}</td>
+              <td>{{ w.get_status_display }}</td>
+              <td>{{ w.total_amount }}</td>
+              <td>
+                <a href="{% url 'workorder:workorder' w.workorder_id %}">Detalle</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No hay trabajos registrados para este vehículo.</p>
+    {% endif %}
+
     <p class="tuki-card-section-title">Trabajos realizados</p>
     <div class="tuki-table-wrapper">
       <table class="tuki-table">
