@@ -2,6 +2,20 @@
 {% extends "core/base.html" %}
 
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert 
+            {% if message.tags == 'success' %}alert-success
+            {% elif message.tags == 'error' %}alert-danger
+            {% elif message.tags == 'warning' %}alert-warning
+            {% elif message.tags == 'info' %}alert-info
+            {% else %}alert-secondary{% endif %} 
+            alert-dismissible fade show" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
 <div class="tuki-page">
   <div class="tuki-page-inner">
 
