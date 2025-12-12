@@ -30,12 +30,12 @@ Informacion cliente
         <hr>
         <div class="tuki-inline">
             <h2 class="tuki-card-title fs-4 tuki-inline-grow">{{ vehicle.vehicle_plate }}</h2>
-            <a href="" class="text-decoration-none text-uppercase">Editar Info</a>
+            <a href="{% url 'vehiculos:vehicle' vehicle.vehicle_id %}" class="text-decoration-none text-uppercase">Ver Vehiculo</a>
         </div>
         <p class="tuki-card-subtitle fw-bold">{{ vehicle.vehicle_model }}</p>
         <div class="tuki-inline">
           <p class="tuki-inline-grow tuki-card-title fs-4">Últimos trabajos</p>
-          <a href="" class="text-decoration-none text-uppercase">Agregar Trabajo</a>
+          <a href="{% url 'workorder:add_for_vehicle' vehicle.vehicle_id %}" class="text-decoration-none text-uppercase">Agregar Trabajo</a>
         </div>
         
         {% if workorders %}
@@ -58,7 +58,7 @@ Informacion cliente
                     <td>Silenciador Trasero + Soldadura</td>
                     <td class="tuki-col-tight">{{ w.total_amount }}</td>
                     <td class="tuki-col-tight">
-                      <a href="" class="btn btn-tuki-secondary">Ver</a>
+                      <a href="{% url 'workorder:workorder' w.workorder_id %}" class="btn btn-tuki-secondary">Ver</a>
                       <a href="" class="btn btn-tuki-secondary">Editar</a>
                     </td>
                   </tr>
