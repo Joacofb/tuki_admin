@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib import messages
 from .models import Customer
+from apps.vehiculos.models import Vehicle
 
 
 def customer_list(request):
@@ -67,8 +68,11 @@ def add_customer(request):
 
 def delete_customer(request, customer_id):
     get_customer = get_object_or_404(Customer, customer_id=customer_id)
+    get_customer_vehicles = Vehicle.objects.all().filter(vehicle_customer=customer_id)
+
     context = {
         'customer': get_customer,
+        'vehicles': get_customer_vehicles,
     }
 
     if request.method == 'POST':

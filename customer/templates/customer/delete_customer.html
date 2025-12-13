@@ -5,7 +5,7 @@ ELIMINAR Cliente: {{customer.customer_name}}
 {% endblock %}
 
 {% block page_subtitle %}
-El cliente tiene 10 vehiculos asignados
+El cliente tiene {{vehicles|length}} vehiculos asignados
 {% endblock %}
 
 {% block page_actions %}
@@ -18,11 +18,39 @@ El cliente tiene 10 vehiculos asignados
 <div class="text-center tuki-card">
     <p class="tuki-card-title text-danger">Si eliminas un cliente todos sus vehiculos asignados se eliminaran tambien</p>
     <p class="tuki-card-section-title">ESTAS SEGURO QUE DESEAS ELIMINAR ESTE CLIENTE?</p>
+    <p class="tuki-card-section-title">CON EL SE ELIMINARAN {{ vehicles|length }} REGISTROS</p>
     <hr>
     <form method="POST" class="d-flex justify-content-around">
     {% csrf_token %}
-    <button type="submit" class="btn btn-tuki-danger">Si, eliminar</button>
-    <a href="{% url 'customer:detail' customer.customer_id %}" class="btn btn-tuki-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-tuki-danger">Si, eliminar</button>
+        <a href="{% url 'customer:detail' customer.customer_id %}" class="btn btn-tuki-secondary">Cancelar</a>
     </form>
+    <hr>
+    {% if vehicles %}
+    <div class="tuki-table-wrapper">
+        <table class="tuki-table">
+            <thead>
+                <tr>
+                    <th class="fw-bold">Patente</th>
+                    <th>Modelo</th>
+                    <th class="text-wrap text-center tuki-col-tight">Trabajos Realizados</th>>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in vehicles %}
+                <tr class="{% if v.workorders.count > 0 %}text-danger fw-bold{% endif %}">
+                    <td>{{ v.vehicle_plate }}</td>
+                    <td>{{ v.vehicle_model }}</td>
+                    <td class="text-center tuki-col-tight">{{ v.workorders.count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p class="tuki-form-help text-danger">LOS VEHICULOS EN ROJO TIENEN TRABAJOS ASIGNADOS</p>
+    {% else %}
+    <p class="tuki-card-section-title">NO HAY VEHICULOS REGISTRADOS</p>
+    {% endif %}
 </div>
+
 {% endblock %}

@@ -4,6 +4,10 @@
 Informacion cliente
 {% endblock %}
 
+{% block page_actions %}
+<a href="{% url 'customer:list' %}" class="btn btn-tuki-primary">Lista Clientes</a>
+{% endblock %}
+
 {% block page_body %}
 <div class="tuki-card">
   <div class="tuki-card-header">
