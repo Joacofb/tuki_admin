@@ -8,6 +8,8 @@ class Customer(models.Model):
     customer_phone = models.CharField(max_length=20)
     customer_email = models.EmailField(blank=True, null=True)
     customer_address = models.CharField(max_length=100, blank=True, null=True)
+    customer_type = models.CharField(blank=True, null=True)
+    customer_billing = models.CharField(blank=True, null=True)
 
     def __str__(self):
         return self.customer_name
