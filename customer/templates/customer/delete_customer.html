@@ -1,0 +1,28 @@
+{% extends 'layouts/page_base.html' %}
+
+{% block page_title %}
+ELIMINAR Cliente: {{customer.customer_name}}
+{% endblock %}
+
+{% block page_subtitle %}
+El cliente tiene 10 vehiculos asignados
+{% endblock %}
+
+{% block page_actions %}
+    <a href="{% url 'customer:detail' customer.customer_id %}" class="btn btn-tuki-primary">
+        Volver
+    </a>
+{% endblock %}
+
+{% block page_body %}
+<div class="text-center tuki-card">
+    <p class="tuki-card-title text-danger">Si eliminas un cliente todos sus vehiculos asignados se eliminaran tambien</p>
+    <p class="tuki-card-section-title">ESTAS SEGURO QUE DESEAS ELIMINAR ESTE CLIENTE?</p>
+    <hr>
+    <form method="POST" class="d-flex justify-content-around">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-tuki-danger">Si, eliminar</button>
+    <a href="{% url 'customer:detail' customer.customer_id %}" class="btn btn-tuki-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

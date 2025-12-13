@@ -1,46 +1,47 @@
-{% extends 'core/base.html' %}
+{% extends 'layouts/page_base.html' %}
 
-<!--{% load static %}-->
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'customer/css/styles.css' %}">
+{% block page_title %}
+Clientes
 {% endblock %}
 
-{% block content %}
-    <div class="my-5 p-3 border rounded bg-first">
-        <div class="d-flex justify-content-center align-items-center">
-            <p class="fw-bold text-dark fs-1 mt-3">CLIENTES</p>
-            <a href="{% url 'product:add' %}" class="ms-3 fs-3 text-dark">
-                <i class="bi bi-plus-circle-fill"></i>
+{% block page_body %}
+    <div class="tuki-card">
+        <div class="tuki-card-header">
+            <div>
+                <h2 class="tuki-card-title">Clientes</h2>
+                <p class="tuki-card-subtitle">
+                    {{ customers|length }} clientes registrados
+                </p>
+            </div>
+            <a href="{% url 'customer:add' %}" class="btn btn-tuki-primary">
+            + Nuevo cliente
             </a>
         </div>
-        <form action="." method="GET" class="mb-3 input-group">
-            <span class="input-group-text" id="basic-addon1">
-                <i class="bi-search"></i>
-            </span>
-            <input type="text" id="search_customer" name="search_customer" placeholder="Buscar Patente -- ej: ASD322 o AS546FR --" class="form-control" value="{{ search_data }}">
-            <button type="submit" class="btn btn-outline-dark">Buscar</button>
+        <form action="." method="GET" class="row g-2 mb-3">
+            <div class="col-12 col-md-9">
+                <input type="text" id="search_customer" name="search_customer" placeholder="Buscar Cliente" class="form-control" value="{{ search_data }}">
+            </div>
+            <div class="col-12 col-md-3 d-grid">
+                <button type="submit" class="btn btn-tuki-secondary">Buscar</button>
+            </div>
         </form>
-        <table class="table align-middle table-sm">
+        <table class="tuki-table">
             <thead>
                 <tr>
-                    <th>PATENTE</th>
                     <th>NOMBRE</th>
                     <th>TELEFONO</th>
+                    <th>EMAIL</th>
                     <th class="text-center">ACCIONES</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
                 {% for customer in customers %}
                 <tr>
-                    <td class="fw-bold text-first text-important">{{ customer.customer_carid }}</td>
                     <td>{{ customer.customer_name }}</td>
                     <td>{{ customer.customer_phone }}</td>
+                    <td>{{ customer.customer_email }}</td>
                     <td class="text-center">
-                        <a href="" class="d-inline text-decoration-none text-dark">
-                            <i class="bi bi-car-front-fill"></i>
-                        </a>
-                        <a href="" class="d-inline text-decoration-none">
+                        <a href="{% url 'customer:detail' customer.customer_id %}" class="d-inline text-decoration-none">
                             <i class="bi-info-square"></i>
                         </a>
                         <a href="" class="d-inline text-decoration-none text-danger">
@@ -75,10 +76,5 @@
 <!--                {% endif %}-->
 <!--            </ul>-->
 <!--        </nav>-->
-        <div>
-            <a href="{% url 'product:all' %}" class="btn btn-outline-dark">
-                <i class="bi-arrow-left-circle"></i> Volver
-            </a>
-        </div>
     </div>
 {% endblock %}
