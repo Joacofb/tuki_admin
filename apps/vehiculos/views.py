@@ -28,10 +28,16 @@ def add_vehiclemodel(request):
     return render(request, 'vehicle/add_vehiclemodel.html', context)
 
 
-def add_vehicle(request):
+def add_vehicle(request, customer_id=None):
     vehicle_models = VehicleModel.objects.all().order_by(
         "vehiclemodel_brand", "vehiclemodel_name", "vehiclemodel_version"
     )
+
+    customer = None
+
+    customer_id = customer_id or request.GET.get('customer')
+    if customer_id:
+        customer = get_object_or_404(Customer, pk=customer_id)
 
     customers = Customer.objects.all().order_by('customer_name')
 
@@ -40,9 +46,12 @@ def add_vehicle(request):
         "vehicle_models": vehicle_models,
         "customers": customers,
         "errors": [],
+        "customer": customer,
     }
 
     if request.method == "POST":
+        errors = []
+
         # 1) Intento de usar un modelo existente
         existing_model_id = request.POST.get("vehicle_model_id", "").strip()
 
@@ -58,12 +67,21 @@ def add_vehicle(request):
         vehicle_color = request.POST.get("vehicle_color", "").strip()
         vehicle_details = request.POST.get("vehicle_details", "").strip()
 
-        # Datos del cliente
-        customer_id = request.POST.get("vehicle_customer", "").strip()
+        # # Datos del cliente
+        posted_customer_id = request.POST.get("vehicle_customer", "").strip()
+        vehicle_customer_obj = None
 
-        errors = []
+        if customer:
+            vehicle_customer_obj = customer
+
+        else:
+            if posted_customer_id:
+                try:
+                    vehicle_customer_obj = Customer.objects.get(pk=posted_customer_id)
+                except Customer.DoesNotExist:
+                    errors.append("El cliente seleccionado no existe")
+
         vehicle_model_obj = None
-
         # Lógica: o seleccionás un modelo existente o definís uno nuevo
         if existing_model_id:
             try:
@@ -84,23 +102,18 @@ def add_vehicle(request):
                     vehiclemodel_production=new_production or None,
                     vehiclemodel_details=new_details or None,
                 )
-        
-        vehicle_customer = None
-        if customer_id:
-            vehicle_customer = Customer.objects.filter(customer_id=customer_id).first()
 
 
         if not errors:
             vehicle = Vehicle.objects.create(
                 vehicle_model=vehicle_model_obj,
-                vehicle_customer=vehicle_customer,
+                vehicle_customer=vehicle_customer_obj,
                 vehicle_plate=vehicle_plate or None,
                 vehicle_color=vehicle_color or None,
                 vehicle_details=vehicle_details or None,
             )
-            
-            return redirect('vehiculos:vehicle', vehicle_id=vehicle.vehicle_id)
 
+            return redirect('vehiculos:vehicle', vehicle_id=vehicle.vehicle_id)
 
         # Si hubo errores, los devolvemos al template
         context["errors"] = errors

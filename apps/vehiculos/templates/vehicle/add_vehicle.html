@@ -152,8 +152,18 @@ Agregar Vehiculo / Cliente
         </div>
     </div>
     <hr>
+
     <div class="col-12">
         <div class="tuki-form-group">
+            {% if customer %}
+            <div class="tuki-card-section-title">
+                Datos del cliente
+            </div>
+            <p class="tuki-form-label">Nombre</p>
+            <input type="text" class="form-control tuki-input" readonly disabled value="{{ customer.customer_name }}">
+            <p class="tuki-form-label">Telefono</p>
+            <input type="text" class="form-control tuki-input" readonly disabled value="{{ customer.customer_phone }}">
+            {% else %}
             <div class="tuki-card-section-title">
                 Seleccionar cliente existente
             </div>
@@ -161,9 +171,10 @@ Agregar Vehiculo / Cliente
             <select name="vehicle_customer" id="vehicle_customer" class="form-select">
                 <option value="">-- Sin cliente asignado --</option>
                 {% for c in customers %}
-                    <option value="{{ c.customer_id }}">{{ c.customer_name }}</option>
+                <option value="{{ c.customer_id }}">{{ c.customer_name }}</option>
                 {% endfor %}
             </select>
         </div>
     </div>
+    {% endif %}
 {% endblock %}

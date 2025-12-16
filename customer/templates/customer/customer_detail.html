@@ -27,7 +27,7 @@ Informacion cliente
     <div class="tuki-inline">
       <p class="tuki-card-title fw-bold tuki-inline-grow text-uppercase">Vehículos</p>
   
-      <a href="{% url 'vehiculos:add' %}?customer={{ customer.customer_id }}" class="btn btn-tuki-primary">Agregar</a>
+      <a href="{% url 'vehiculos:add_for_customer' customer.customer_id %}" class="btn btn-tuki-primary">Agregar</a>
     </div>
 
     {% if vehicle_workorders %}
